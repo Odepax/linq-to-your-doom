@@ -35,7 +35,7 @@ namespace LinqToYourDoom.Tests.Text {
 
 		[Test]
 		public static void AppendLine_Append_AppendWithoutIndent() =>
-			Assert.AreEqual("I\r\nL\r\n\tI\r\n\tL\r\nWII\r\n\t\tI", new IndentedStringBuilder()
+			Assert.AreEqual($"I{ Environment.NewLine }L{ Environment.NewLine }\tI{ Environment.NewLine }\tL{ Environment.NewLine }WII{ Environment.NewLine }\t\tI", new IndentedStringBuilder()
 				.Append("I").AppendLine()
 				.AppendLine("L")
 				.Indent()
@@ -51,7 +51,7 @@ namespace LinqToYourDoom.Tests.Text {
 
 		[Test]
 		public static void Append_does_not_count_lines() =>
-			Assert.AreEqual("0\r\n\t1\n0\r\n", new IndentedStringBuilder()
+			Assert.AreEqual($"0{ Environment.NewLine }\t1\n0{ Environment.NewLine }", new IndentedStringBuilder()
 				.AppendLine("0")
 				.Indent()
 				.AppendLine("1\n0")
@@ -60,7 +60,7 @@ namespace LinqToYourDoom.Tests.Text {
 
 		[Test]
 		public static void AppendJoin() =>
-			Assert.AreEqual("<A, B, C>\r\n--", new IndentedStringBuilder()
+			Assert.AreEqual($"<A, B, C>{ Environment.NewLine }--", new IndentedStringBuilder()
 				.AppendJoin(new[] { "A", "B", "C" }, ", ", "<", ">", "--")
 				.AppendLine()
 				.AppendJoin(new string[0], ", ", "<", ">", "--")
