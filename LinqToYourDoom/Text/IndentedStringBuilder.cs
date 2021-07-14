@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -37,12 +37,9 @@ namespace LinqToYourDoom.Text {
 		}
 
 		/// <summary>
-		/// ...
+		/// Throws an <see cref="InvalidOperationException"> if the current indentation level
+		/// of this <see cref="IndentedStringBuilder"/> isn't as <paramref name="expected"/>.
 		/// </summary>
-		///
-		/// <exception cref="InvalidOperationException">
-		/// ...
-		/// </exception>
 		public IndentedStringBuilder AssertIndentLevel(int expected = 0) {
 			if (IndentLevel != expected)
 				throw new InvalidOperationException($"Indentation level is { IndentLevel } instead of expected { expected }.");
