@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<Version>0.1.0</Version>
+		<Authors>Odepax</Authors>
+		<Description>Extension methods... Because...</Description>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageIcon>Icon-64.png</PackageIcon>
+		<PackageTags>Linq;Extensions</PackageTags>
+		<RepositoryUrl>https://github.com/Odepax/linq-to-your-doom</RepositoryUrl>
+		<!-- <PackageProjectUrl>https://odepax.github.io/linq-to-your-doom</PackageProjectUrl> -->
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="Icon-64.png" Pack="true" PackagePath=""/>
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\LinqToYourDoom.SourceGenerators\LinqToYourDoom.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false"/>
+	</ItemGroup>
+</Project>
