@@ -104,14 +104,14 @@ namespace LinqToYourDoom.Tests.Linq.Extensions {
 				[3] = 'A',
 				[1] = 'B',
 				[2] = 'C'
-			}, dictionary.OrderByKey(k => Math.Sin(k)));
+			}, dictionary.OrderByKey(k => global::System.Math.Sin(k)));
 
 			Assert.AreEqual(new Dictionary<int, char>() {
 				[2] = 'C',
 				[1] = 'B',
 				[3] = 'A',
 				[4] = 'D'
-			}, dictionary.OrderByKeyDescending(k => Math.Sin(k)));
+			}, dictionary.OrderByKeyDescending(k => global::System.Math.Sin(k)));
 
 			Assert.AreEqual(new Dictionary<int, char>() {
 				[4] = 'D',
