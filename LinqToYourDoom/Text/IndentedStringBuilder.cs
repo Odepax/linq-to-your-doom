@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace LinqToYourDoom.Text {
-	public sealed class IndentedStringBuilder {
+namespace LinqToYourDoom {
+	public class IndentedStringBuilder {
 		public StringBuilder Output { get; }
 		public string IndentString { get; set; }
 

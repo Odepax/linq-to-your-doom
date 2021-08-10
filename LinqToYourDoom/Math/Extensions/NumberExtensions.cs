@@ -1,6 +1,6 @@
 using System.Runtime.CompilerServices;
 
-namespace LinqToYourDoom.Maths.Extensions {
+namespace LinqToYourDoom {
 	public static partial class NumberExtensions {
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static float CoerceToFloat(this double @this) => @this < float.MinValue ? float.MinValue : float.MaxValue < @this ? float.MaxValue : (float) @this;
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static decimal CoerceToDecimal(this double @this) => @this < (double) decimal.MinValue ? decimal.MinValue : (double) decimal.MaxValue < @this ? decimal.MaxValue : (decimal) @this;

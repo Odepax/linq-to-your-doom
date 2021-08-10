@@ -7,9 +7,8 @@ namespace LinqToYourDoom.SourceGenerators.Utilities {
 			code.AppendLine(@"using System;");
 			code.AppendLine(@"using System.Collections.Generic;");
 			code.AppendLine(@"using System.Runtime.CompilerServices;");
-			code.AppendLine(@"using LinqToYourDoom.System;");
 
-			code.AppendLine(@"namespace LinqToYourDoom.Linq.Extensions {"); {
+			code.AppendLine(@"namespace LinqToYourDoom {"); {
 				code.AppendLine(@"public static partial class EnumerableExtensions {"); {
 					GenerateAbsMin_AbsMax(code);
 					Generate_(code, 8);

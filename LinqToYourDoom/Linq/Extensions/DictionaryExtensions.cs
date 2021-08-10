@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
-namespace LinqToYourDoom.Linq.Extensions {
+namespace LinqToYourDoom {
 	public static class DictionaryExtensions {
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static IEnumerable<KeyValuePair<TKey, TValue>> WhereValueNotNull<TKey, TValue>(this IEnumerable<KeyValuePair<TKey, TValue?>> @this) =>

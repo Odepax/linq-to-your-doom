@@ -5,7 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 
-namespace LinqToYourDoom.System.Extensions {
+namespace LinqToYourDoom {
 	public static class LazyExtensions {
 		/// <summary>
 		/// Equivalent of <see cref="Enumerable.Cast{TResult}(IEnumerable)"/> for a <see cref="Lazy{T}"/> object.

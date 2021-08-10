@@ -1,8 +1,5 @@
 using System;
 using System.Collections.Generic;
-using LinqToYourDoom.Assignable;
-using LinqToYourDoom.Assignable.Extensions;
-using LinqToYourDoom.Maths;
 using NUnit.Framework;
 
 namespace LinqToYourDoom.Tests.Assignable.Extensions {

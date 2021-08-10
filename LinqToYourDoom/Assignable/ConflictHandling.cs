@@ -1,4 +1,4 @@
-namespace LinqToYourDoom.Assignable {
+namespace LinqToYourDoom {
 	/// <summary>
 	/// Defines the behavior to adopt when assigning an <see cref="IAssignable{TIn, TOut}"/>
 	/// from another object containing non-default and non-equal data.

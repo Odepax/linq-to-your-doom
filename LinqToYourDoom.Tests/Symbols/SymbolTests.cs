@@ -1,6 +1,5 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using LinqToYourDoom.Symbols;
 using NUnit.Framework;
 
 namespace LinqToYourDoom.Tests.Symbols {

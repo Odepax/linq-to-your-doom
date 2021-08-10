@@ -1,9 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using LinqToYourDoom.Linq.Extensions;
-using LinqToYourDoom.System;
-using LinqToYourDoom.Text.Extensions;
 using NUnit.Framework;
 
 namespace LinqToYourDoom.Tests.Linq.Extensions {

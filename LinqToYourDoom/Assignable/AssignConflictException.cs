@@ -1,7 +1,7 @@
 using System;
 using System.Text;
 
-namespace LinqToYourDoom.Assignable {
+namespace LinqToYourDoom {
 	/// <summary> Konflikt! </summary>
 	public sealed class AssignConflictException : Exception {
 		/// <summary>

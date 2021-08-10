@@ -1,9 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using LinqToYourDoom.Assignable;
-using LinqToYourDoom.Symbols;
-using LinqToYourDoom.System;
 using NUnit.Framework;
 
 namespace LinqToYourDoom.Tests.Symbols {

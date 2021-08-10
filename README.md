@@ -31,12 +31,11 @@ sealed class Cat : IAssignable<Cat, Cat> {
       Name = Name.Assign(other.Name, StringComparison.InvariantCulture, conflictHandling, string.Concat, nameof(Name));
       PurrPower = PurrPower.Assign(other.PurrPower, conflictHandling, MathD.Avg, nameof(PurrPower));
 
-      Friends.Set(
-         Friends
-            .ToDictionary(it => it.Id)
-            .Assign(other.Friends.SelectKeyed(it => it.Id), conflictHandling, nameof(Friends))
-            .Values
-      );
+      Friends
+         .ToDictionary(it => it.Id)
+         .Assign(other.Friends.SelectKeyed(it => it.Id), conflictHandling, nameof(Friends))
+         .Values
+         .SetTo(Friends);
 
       return this;
    }
@@ -207,3 +206,12 @@ value.ToBuilder(); // string => StringBuilder
 value.ToIndentedBuilder(); // string => IndentedStringBuilder
 builder.ToIndentedBuilder(); // StringBuilder => IndentedStringBuilder
 ```
+
+Source Code Structure
+----
+
+<!-- 41DA3A82-0B89-4CB9-AF10-8E4D00FF60E1 -->
+
+Unlike what is the default in the C# world, directories in the source code of the main assembly are not supposed to provide sub-namespaces. The assembly is flattened into a single `LinqToYourDoom` namespace, while preserving a nice organization in the solution explorer IDE's side bar.
+
+This decision is enforced by `LinqToYourDoom.Tests.SingleNamespaceTests.SingleNamespace()`.

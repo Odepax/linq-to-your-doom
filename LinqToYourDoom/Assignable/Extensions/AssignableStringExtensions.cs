@@ -1,7 +1,6 @@
 using System;
-using LinqToYourDoom.Text.Extensions;
 
-namespace LinqToYourDoom.Assignable.Extensions {
+namespace LinqToYourDoom {
 	public static class AssignableStringExtensions {
 		/// <summary>
 		/// Merges two <see cref="string"/>s according to the <see cref="IAssignable{TIn, TOut}"/> rules.

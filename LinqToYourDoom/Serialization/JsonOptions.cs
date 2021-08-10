@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
-namespace LinqToYourDoom.Serialization {
+
+namespace LinqToYourDoom {
 	public static class JsonOptions {
 		public static readonly JsonSerializerOptions Indented = new() {
 			ReadCommentHandling = JsonCommentHandling.Skip,

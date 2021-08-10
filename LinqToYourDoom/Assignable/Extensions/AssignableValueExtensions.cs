@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-namespace LinqToYourDoom.Assignable.Extensions {
+namespace LinqToYourDoom {
 	public static class AssignableValueExtensions {
 		/// <inheritdoc cref="Assign{T}(T, T, IEqualityComparer{T}, ConflictHandling, Func{T, T, T}, string?)"/>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]

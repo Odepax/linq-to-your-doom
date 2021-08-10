@@ -1,11 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using LinqToYourDoom.Assignable;
-using LinqToYourDoom.Assignable.Extensions;
-using LinqToYourDoom.Linq.Extensions;
-using LinqToYourDoom.Maths;
-using LinqToYourDoom.System.Extensions;
 using NUnit.Framework;
 
 namespace LinqToYourDoom.Tests.Assignable {
@@ -22,12 +17,11 @@ namespace LinqToYourDoom.Tests.Assignable {
 				Name = Name.Assign(other.Name, StringComparison.InvariantCulture, conflictHandling, string.Concat, nameof(Name));
 				PurrPower = PurrPower.Assign(other.PurrPower, conflictHandling, MathD.Avg, nameof(PurrPower));
 
-				Friends.Set(
-					Friends
-						.ToDictionary(it => it.Id)
-						.Assign(other.Friends.SelectKeyed(it => it.Id), conflictHandling, nameof(Friends))
-						.Values
-				);
+				Friends
+					.ToDictionary(it => it.Id)
+					.Assign(other.Friends.SelectKeyed(it => it.Id), conflictHandling, nameof(Friends))
+					.Values
+					.SetTo(Friends);
 
 				return this;
 			}

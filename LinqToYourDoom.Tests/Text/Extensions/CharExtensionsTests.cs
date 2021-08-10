@@ -1,6 +1,4 @@
-﻿using System;
-using LinqToYourDoom.System;
-using LinqToYourDoom.Text.Extensions;
+using System;
 using NUnit.Framework;
 
 namespace LinqToYourDoom.Tests.Text.Extensions {

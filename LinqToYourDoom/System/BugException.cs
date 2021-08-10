@@ -1,6 +1,6 @@
 using System;
 
-namespace LinqToYourDoom.System {
+namespace LinqToYourDoom {
 	/// <summary>
 	/// A base class for exceptions to be thrown when some suposedly unreachable case has been reached,
 	/// e.g. in the <see langword="default"/> case of a <see langword="switch"/> on an enumeration...

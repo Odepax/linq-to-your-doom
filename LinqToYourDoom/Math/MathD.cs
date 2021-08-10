@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.CompilerServices;
 
-namespace LinqToYourDoom.Maths {
+namespace LinqToYourDoom {
 	public static partial class MathD {
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static (T Min, T Max) MinMax<T>(T a, T b) where T : IComparable<T> =>

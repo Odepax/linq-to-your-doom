@@ -1,7 +1,6 @@
-using LinqToYourDoom.Maths;
 using NUnit.Framework;
 
-namespace LinqToYourDoom.Tests.Maths {
+namespace LinqToYourDoom.Tests.Math {
 	static class MathDTests {
 		[Test]
 		[TestCase(1, 1, 1)]

@@ -9,7 +9,7 @@ namespace LinqToYourDoom.SourceGenerators.Utilities {
 			code.AppendLine(@"using System.Linq;");
 			code.AppendLine(@"using System.Runtime.CompilerServices;");
 
-			code.AppendLine(@"namespace LinqToYourDoom.System.Extensions {"); {
+			code.AppendLine(@"namespace LinqToYourDoom {"); {
 				code.AppendLine(@"public static partial class ObjectExtensions {"); {
 					GenerateToVariable(code, 8);
 					GenerateTo(code, 8);

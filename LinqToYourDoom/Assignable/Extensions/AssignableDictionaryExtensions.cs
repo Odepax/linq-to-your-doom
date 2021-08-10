@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using LinqToYourDoom.Text.Extensions;
 
-namespace LinqToYourDoom.Assignable.Extensions {
+namespace LinqToYourDoom {
 	public static class AssignableDictionaryExtensions {
 		/// <inheritdoc cref="Assign{TDictionary, TKey, TValue}(TDictionary, IEnumerable{KeyValuePair{TKey, TValue}}, IEqualityComparer{TValue}, ConflictHandling, string?)"/>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]

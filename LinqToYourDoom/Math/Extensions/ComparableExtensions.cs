@@ -1,8 +1,7 @@
 using System;
 using System.Runtime.CompilerServices;
-using LinqToYourDoom.System;
 
-namespace LinqToYourDoom.Maths.Extensions {
+namespace LinqToYourDoom {
 	public static class ComparableExtensions {
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static T CoerceAtLeast<T>(this T @this, T min) where T : IComparable<T> =>

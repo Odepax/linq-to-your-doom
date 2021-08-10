@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 
-namespace LinqToYourDoom.Symbols {
+namespace LinqToYourDoom {
 	/// <inheritdoc cref="SymbolDictionary"/>
 	public interface IWriteOnlySymbolDictionary {
 		/// <summary>

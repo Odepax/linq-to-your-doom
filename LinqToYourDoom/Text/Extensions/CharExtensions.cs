@@ -1,9 +1,8 @@
-﻿using System;
+using System;
 using System.Globalization;
 using System.Runtime.CompilerServices;
-using LinqToYourDoom.System;
 
-namespace LinqToYourDoom.Text.Extensions {
+namespace LinqToYourDoom {
 	public static class CharExtensions {
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static bool IsControl(this char @this) => char.IsControl(@this);
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static bool IsDigit(this char @this) => char.IsDigit(@this);

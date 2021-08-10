@@ -1,7 +1,6 @@
 using System;
-using LinqToYourDoom.System.Extensions;
 
-namespace LinqToYourDoom.Symbols {
+namespace LinqToYourDoom {
 	/// <summary>
 	/// A non generic <see cref="Symbol{T}"/> for use with collections,
 	/// since C# doesn't have a <see href="https://docs.oracle.com/javase/tutorial/extra/generics/wildcards.html">generic wildcard</see>.

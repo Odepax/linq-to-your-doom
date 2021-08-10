@@ -2,10 +2,12 @@
 	<PropertyGroup>
 		<TargetFramework>net5.0</TargetFramework>
 		<Nullable>enable</Nullable>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<NoWarn>$(NoWarn);1591</NoWarn> <!-- GenerateDocumentationFile:true triggers 1591-warnings whenever a public object doesn't have documentation... -->
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<Version>0.1.0</Version>
+		<Version>0.2.0</Version>
 		<Authors>Odepax</Authors>
 		<Description>Extension methods... Because...</Description>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>

@@ -1,6 +1,6 @@
 using System;
 
-namespace LinqToYourDoom.System {
+namespace LinqToYourDoom {
 	/// <summary>
 	/// Cloning, with explicit <b>deep</b> sematic lacked by <see cref="ICloneable"/>.
 	/// </summary>

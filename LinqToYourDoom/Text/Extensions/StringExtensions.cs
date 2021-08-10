@@ -1,10 +1,9 @@
-﻿using System;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Text;
-using LinqToYourDoom.System;
 
-namespace LinqToYourDoom.Text.Extensions {
+namespace LinqToYourDoom {
 	public static class StringExtensions {
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static bool DoesNotEqual(this string? @this, string? other, StringComparison comparisonType) => !string.Equals(@this, other, comparisonType);
 

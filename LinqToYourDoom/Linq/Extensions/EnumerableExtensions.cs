@@ -5,9 +5,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
-using LinqToYourDoom.System;
 
-namespace LinqToYourDoom.Linq.Extensions {
+namespace LinqToYourDoom {
 	public static partial class EnumerableExtensions {
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static IEnumerable<T> SelectMany<T>(this IEnumerable<IEnumerable<T>> @this) =>
@@ -330,6 +329,24 @@ namespace LinqToYourDoom.Linq.Extensions {
 		public static IEnumerable<T> RemoveRangeFrom<T>(this IEnumerable<T> @this, ICollection<T> collection) {
 			foreach (var item in @this)
 				collection.Remove(item);
+
+			return @this;
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static IEnumerable<T> SetTo<T>(this IEnumerable<T> @this, List<T> collection) {
+			collection.Clear();
+			collection.AddRange(@this);
+
+			return @this;
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static IEnumerable<T> SetTo<T>(this IEnumerable<T> @this, ICollection<T> collection) {
+			collection.Clear();
+
+			foreach (var item in @this)
+				collection.Add(item);
 
 			return @this;
 		}

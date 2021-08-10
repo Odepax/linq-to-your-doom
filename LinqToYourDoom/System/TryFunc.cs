@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 
-namespace LinqToYourDoom.System {
+namespace LinqToYourDoom {
 	/// <summary>
 	/// Encapsulates a method that takes three input parameters,
 	/// and tries to output a value to its <paramref name="out"/> output parameter,

@@ -1,7 +1,7 @@
-﻿using System.Runtime.CompilerServices;
+using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace LinqToYourDoom.Text.Extensions {
+namespace LinqToYourDoom {
 	public static class StringBuilderExtensions {
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static StringBuilder ToBuilder(this string? @this) => new(@this);

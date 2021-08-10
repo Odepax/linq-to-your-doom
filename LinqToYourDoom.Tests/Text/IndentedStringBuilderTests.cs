@@ -1,5 +1,4 @@
-﻿using System;
-using LinqToYourDoom.Text;
+using System;
 using NUnit.Framework;
 
 namespace LinqToYourDoom.Tests.Text {

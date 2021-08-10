@@ -1,4 +1,3 @@
-using LinqToYourDoom.System;
 using NUnit.Framework;
 
 namespace LinqToYourDoom.Tests.System {

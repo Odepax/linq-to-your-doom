@@ -1,4 +1,4 @@
-namespace LinqToYourDoom.Assignable {
+namespace LinqToYourDoom {
 	/// <summary>
 	/// <see cref="IAssignable{TIn, TOut}"/> was thought of as a deep counterpart to JavaScript's
 	/// <see href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign"><c>Object.assign()</c></see>.

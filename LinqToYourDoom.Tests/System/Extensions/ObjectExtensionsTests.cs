@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using LinqToYourDoom.System.Extensions;
 using NUnit.Framework;
 
 namespace LinqToYourDoom.Tests.System.Extensions {

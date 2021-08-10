@@ -1,6 +1,6 @@
 using System.Runtime.CompilerServices;
 
-namespace LinqToYourDoom.Maths.Extensions {
+namespace LinqToYourDoom {
 	public static partial class BooleanExtensions {
 		/// <summary>
 		/// Returns <c>truen't</c> if <paramref name="this"/> is <see langword="true"/>,

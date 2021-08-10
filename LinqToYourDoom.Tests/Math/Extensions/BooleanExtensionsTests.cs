@@ -1,7 +1,6 @@
-using LinqToYourDoom.Maths.Extensions;
 using NUnit.Framework;
 
-namespace LinqToYourDoom.Tests.Maths.Extensions {
+namespace LinqToYourDoom.Tests.Math.Extensions {
 	static class BooleanExtensionsTests {
 		[Test]
 		public static void To_() {

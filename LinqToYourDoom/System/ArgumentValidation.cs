@@ -1,4 +1,4 @@
-﻿namespace LinqToYourDoom.System {
+namespace LinqToYourDoom {
 	/// <summary>
 	/// Defines what behavior to adopt when validating method arguments.
 	/// Default is <see cref="Strict"/>.

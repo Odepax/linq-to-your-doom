@@ -1,3 +1,3 @@
-namespace LinqToYourDoom.System.Extensions {
+namespace LinqToYourDoom {
 	public static partial class ValueTupleExtensions {}
 }

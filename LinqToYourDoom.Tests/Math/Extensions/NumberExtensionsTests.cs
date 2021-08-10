@@ -1,9 +1,7 @@
 using System;
-using LinqToYourDoom.Maths.Extensions;
-using LinqToYourDoom.System;
 using NUnit.Framework;
 
-namespace LinqToYourDoom.Tests.Maths.Extensions {
+namespace LinqToYourDoom.Tests.Math.Extensions {
 	static class NumberExtensionsTests {
 		[Test]
 		public static void CoerceTo_() {

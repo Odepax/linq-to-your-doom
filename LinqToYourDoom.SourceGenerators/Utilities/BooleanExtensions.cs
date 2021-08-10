@@ -5,7 +5,7 @@ namespace LinqToYourDoom.SourceGenerators.Utilities {
 		public static void Generate(StringBuilder code) {
 			code.AppendLine(@"using System.Runtime.CompilerServices;");
 
-			code.AppendLine(@"namespace LinqToYourDoom.Maths.Extensions {"); {
+			code.AppendLine(@"namespace LinqToYourDoom {"); {
 				code.AppendLine(@"public static partial class BooleanExtensions {"); {
 					GenerateTo_(code);
 					GenerateToBool(code);

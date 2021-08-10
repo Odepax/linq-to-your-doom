@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-namespace LinqToYourDoom.Linq.Extensions {
+namespace LinqToYourDoom {
 	public static class ListExtensions {
 		/// <summary>
 		/// Alias for <see cref="List{T}.Clear()"/> then <see cref="List{T}.AddRange(IEnumerable{T})"/>.

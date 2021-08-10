@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
-namespace LinqToYourDoom.System.Extensions {
+namespace LinqToYourDoom {
 	public static partial class ObjectExtensions {
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static bool DoesNotEqual<T>(this T? @this, T? other) =>

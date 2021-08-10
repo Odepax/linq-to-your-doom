@@ -1,6 +1,6 @@
 using System.Runtime.CompilerServices;
 
-namespace LinqToYourDoom.Assignable.Extensions {
+namespace LinqToYourDoom {
 	public static class AssignableExtensions {
 		/// <inheritdoc cref="Assign{TAssignable, TIn, TOut}(TAssignable, TIn, ConflictHandling, string?)"/>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]

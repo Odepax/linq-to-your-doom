@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace LinqToYourDoom.Linq {
+namespace LinqToYourDoom {
 	public static class EqualityComparer {
 		/// <summary>
 		/// Returns an equality comparer that uses the given <paramref name="equals"/> delegate

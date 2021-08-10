@@ -4,7 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace LinqToYourDoom.System.Extensions {
+namespace LinqToYourDoom {
 	public static class TypeExtensions {
 		/// <summary> Alias of <see cref="Type.IsAssignableTo(Type?)"/>. </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]

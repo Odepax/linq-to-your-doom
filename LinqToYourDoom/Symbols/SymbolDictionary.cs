@@ -1,11 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using LinqToYourDoom.Assignable;
-using LinqToYourDoom.Linq.Extensions;
-using LinqToYourDoom.System;
 
-namespace LinqToYourDoom.Symbols {
+namespace LinqToYourDoom {
 	/// <summary>
 	/// A collection where the <i>"type"</i> of each key matches the type of its value
 	/// on a key-value-pair basis.
@@ -17,7 +14,7 @@ namespace LinqToYourDoom.Symbols {
 	/// <see cref="SymbolDictionary"/> uses <see cref="Symbol{T}"/> as keys to maintain type safety
 	/// while allowing each key-value-pair to have its distinct type.
 	/// </remarks>
-	public sealed class SymbolDictionary : ISymbolDictionary, IShallowCloneable<SymbolDictionary>, IAssignable<IReadOnlySymbolDictionary, SymbolDictionary> {
+	public class SymbolDictionary : ISymbolDictionary, IShallowCloneable<SymbolDictionary>, IAssignable<IReadOnlySymbolDictionary, SymbolDictionary> {
 		readonly InnerTypedDictionary<Symbol, object?> Storage;
 		SymbolDictionary(InnerTypedDictionary<Symbol, object?> storage) => Storage = storage;
 

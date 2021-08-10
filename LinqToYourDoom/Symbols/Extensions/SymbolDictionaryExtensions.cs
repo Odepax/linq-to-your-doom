@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
-using LinqToYourDoom.System.Extensions;
 
-namespace LinqToYourDoom.Symbols.Extensions {
+namespace LinqToYourDoom {
 	public static class SymbolDictionaryExtensions {
 		/// <summary>
 		/// Retrieves the value associated with the given <paramref name="key"/>,

@@ -8,7 +8,7 @@ namespace LinqToYourDoom.SourceGenerators.Utilities {
 			code.AppendLine(@"using System.Collections.Generic;");
 			code.AppendLine(@"using System.Runtime.CompilerServices;");
 
-			code.AppendLine(@"namespace LinqToYourDoom.System.Extensions {"); {
+			code.AppendLine(@"namespace LinqToYourDoom {"); {
 				code.AppendLine(@"public static partial class ValueTupleExtensions {"); {
 					GenerateTo_(code, 8);
 

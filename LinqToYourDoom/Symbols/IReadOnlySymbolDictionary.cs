@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace LinqToYourDoom.Symbols {
+namespace LinqToYourDoom {
 	/// <inheritdoc cref="SymbolDictionary"/>
 	public interface IReadOnlySymbolDictionary : IReadOnlyCollection<KeyValuePair<Symbol, object>> {
 		/// <value>

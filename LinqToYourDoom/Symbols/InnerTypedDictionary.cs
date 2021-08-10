@@ -4,12 +4,8 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using LinqToYourDoom.Assignable;
-using LinqToYourDoom.Assignable.Extensions;
-using LinqToYourDoom.System;
-using LinqToYourDoom.System.Extensions;
 
-namespace LinqToYourDoom.Symbols {
+namespace LinqToYourDoom {
 	/// <summary>
 	/// <see cref="InnerTypedDictionary{TKey, TValue}"/> is a storage helper,
 	/// refactored from experimental implementations of <see cref="SymbolDictionary"/>.

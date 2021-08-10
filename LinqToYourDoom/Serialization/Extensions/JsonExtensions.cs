@@ -1,7 +1,7 @@
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 
-namespace LinqToYourDoom.Serialization.Extensions {
+namespace LinqToYourDoom {
 	public static class JsonExtensions {
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static string ToJsonString<T>(this T @this, bool writeIndented = true) => JsonSerializer.Serialize(@this, writeIndented ? JsonOptions.Indented: JsonOptions.Unindented);
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static string ToJsonString<T>(this T @this, JsonSerializerOptions options) => JsonSerializer.Serialize(@this, options);

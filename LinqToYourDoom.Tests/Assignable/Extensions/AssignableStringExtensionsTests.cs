@@ -1,6 +1,4 @@
 using System;
-using LinqToYourDoom.Assignable;
-using LinqToYourDoom.Assignable.Extensions;
 using NUnit.Framework;
 
 namespace LinqToYourDoom.Tests.Assignable.Extensions {

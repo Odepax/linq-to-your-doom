@@ -1,4 +1,4 @@
-Odepax Linq to Your Doom License
+Odepax Linq-to-Your-Doom License
 ====
 
 ![Code License: MIT](https://img.shields.io/badge/Source_Code-MIT-green.svg)

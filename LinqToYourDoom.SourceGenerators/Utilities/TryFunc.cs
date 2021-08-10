@@ -5,7 +5,7 @@ namespace LinqToYourDoom.SourceGenerators.Utilities {
 		public static void Generate(StringBuilder code) {
 			code.AppendLine(@"using System.Diagnostics.CodeAnalysis;");
 
-			code.AppendLine(@"namespace LinqToYourDoom.System {"); {
+			code.AppendLine(@"namespace LinqToYourDoom {"); {
 				GenerateTryFunc(code, 16);
 			}
 			code.AppendLine(@"}");

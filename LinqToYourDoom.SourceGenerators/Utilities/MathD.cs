@@ -6,7 +6,7 @@ namespace LinqToYourDoom.SourceGenerators.Utilities {
 			code.AppendLine(@"using System;");
 			code.AppendLine(@"using System.Runtime.CompilerServices;");
 
-			code.AppendLine(@"namespace LinqToYourDoom.Maths {"); {
+			code.AppendLine(@"namespace LinqToYourDoom {"); {
 				code.AppendLine(@"/// <summary> <i>D</i> stands for <i>Doom</i>, of course... </summary>");
 				code.AppendLine(@"public static partial class MathD {"); {
 					GenerateAvg(code);

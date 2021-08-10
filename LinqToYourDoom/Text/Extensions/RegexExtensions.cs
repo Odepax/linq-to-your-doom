@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
-namespace LinqToYourDoom.Text.Extensions {
+namespace LinqToYourDoom {
 	public static class RegexExtensions {
 		/// <summary>
 		/// To get syntax coloration of the pattern, use the special <c>language=</c> comment:
