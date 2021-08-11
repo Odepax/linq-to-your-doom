@@ -1,6 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Text;
 using NUnit.Framework;
 
 namespace LinqToYourDoom.Tests.Text.Extensions {
@@ -81,12 +80,84 @@ namespace LinqToYourDoom.Tests.Text.Extensions {
 		[TestCase("xy", 0, "")]
 		[TestCase("xy", 1, "xy")]
 		[TestCase("xy", 5, "xyxyxyxyxy")]
+		[TestCase("", 3, "")]
 		public static void Repeat(string value, int count, string expected) {
 			var actual = value.Repeat(count, ArgumentValidation.Lenient);
 
 			Assert.AreEqual(expected, actual);
 
 			if (count < 0) Assert.Throws<ArgumentOutOfRangeException>(() => value.Repeat(count));
+		}
+
+		[Test]
+		[TestCase("xy", -5, "", "/")]
+		[TestCase("xy", -1, "", "/")]
+		[TestCase("xy", 0, "", "/")]
+		[TestCase("xy", 1, "xy", "<xy>")]
+		[TestCase("xy", 5, "xyxyxyxyxy", "<xy, xy, xy, xy, xy>")]
+		[TestCase("", 3, "", "/")]
+		public static void RepeatToBuilder(string value, int count, string expectedA, string expectedB) {
+			var outputA = new StringBuilder();
+			var outputB = new StringBuilder();
+
+			value.RepeatToBuilder(count, outputA, ArgumentValidation.Lenient);
+			value.RepeatToBuilder(count, outputB, separator: ", ", prefix: "<", suffix: ">", fallback: "/", ArgumentValidation.Lenient);
+
+			Assert.AreEqual(expectedA, outputA.ToString());
+			Assert.AreEqual(expectedB, outputB.ToString());
+
+			if (count < 0) {
+				Assert.Throws<ArgumentOutOfRangeException>(() => value.RepeatToBuilder(count, outputA));
+				Assert.Throws<ArgumentOutOfRangeException>(() => value.RepeatToBuilder(count, outputB, separator: ", ", prefix: "<", suffix: ">", fallback: "/"));
+			}
+		}
+
+		[Test]
+		[Ignore("Eye & compiler only")]
+		public static void RepeatToBuilder_disambiguation() {
+			var output = new StringBuilder();
+
+			// string string.Repeat(int, ArgumentValidation)
+			string.Empty.Repeat(0);
+			string.Empty.Repeat(0, ArgumentValidation.Lenient);
+
+			// string string.Repeat(int, string, string, string, string, ArgumentValidation)
+			string.Empty.Repeat(0, "", "", "", "");
+			string.Empty.Repeat(0, "", "", "", "", ArgumentValidation.Lenient);
+			string.Empty.Repeat(0, separator: "", prefix: "", suffix: "", fallback: "");
+			string.Empty.Repeat(0, separator: "", prefix: "", suffix: "", fallback: "", ArgumentValidation.Lenient);
+
+			// string string.Repeat(int, ArgumentValidation, string, string, string, string)
+			string.Empty.Repeat(0, ArgumentValidation.Lenient, "", "", "", "");
+			string.Empty.Repeat(0, ArgumentValidation.Lenient, separator: "", prefix: "", suffix: "", fallback: "");
+
+			// StringBuilder string.RepeatToBuilder(int, ArgumentValidation)
+			string.Empty.RepeatToBuilder(0);
+			string.Empty.RepeatToBuilder(0, ArgumentValidation.Lenient);
+
+			// StringBuilder string.RepeatToBuilder(int, string, string, string, string, ArgumentValidation)
+			string.Empty.RepeatToBuilder(0, "", "", "", "");
+			string.Empty.RepeatToBuilder(0, "", "", "", "", ArgumentValidation.Lenient);
+			string.Empty.RepeatToBuilder(0, separator: "", prefix: "", suffix: "", fallback: "");
+			string.Empty.RepeatToBuilder(0, separator: "", prefix: "", suffix: "", fallback: "", ArgumentValidation.Lenient);
+
+			// StringBuilder string.RepeatToBuilder(int, ArgumentValidation, string, string, string, string)
+			string.Empty.RepeatToBuilder(0, ArgumentValidation.Lenient, "", "", "", "");
+			string.Empty.RepeatToBuilder(0, ArgumentValidation.Lenient, separator: "", prefix: "", suffix: "", fallback: "");
+
+			// StringBuilder string.RepeatToBuilder(int, StringBuilder, ArgumentValidation)
+			string.Empty.RepeatToBuilder(0, output);
+			string.Empty.RepeatToBuilder(0, output, ArgumentValidation.Lenient);
+
+			// StringBuilder string.RepeatToBuilder(int, StringBuilder, string, string, string, string, ArgumentValidation)
+			string.Empty.RepeatToBuilder(0, output, "", "", "", "");
+			string.Empty.RepeatToBuilder(0, output, "", "", "", "", ArgumentValidation.Lenient);
+			string.Empty.RepeatToBuilder(0, output, separator: "", prefix: "", suffix: "", fallback: "");
+			string.Empty.RepeatToBuilder(0, output, separator: "", prefix: "", suffix: "", fallback: "", ArgumentValidation.Lenient);
+
+			// StringBuilder string.RepeatToBuilder(int, StringBuilder, ArgumentValidation, string, string, string, string)
+			string.Empty.RepeatToBuilder(0, output, ArgumentValidation.Lenient, "", "", "", "");
+			string.Empty.RepeatToBuilder(0, output, ArgumentValidation.Lenient, separator: "", prefix: "", suffix: "", fallback: "");
 		}
 
 		[Test]

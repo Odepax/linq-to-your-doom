@@ -70,11 +70,70 @@ namespace LinqToYourDoom {
 		/// <paramref name="count"/> will be silently considered <c>0</c>
 		/// otherwise, an <see cref="ArgumentOutOfRangeException"/> is thrown.
 		/// </param>
-		public static string Repeat(this string @this, int count, ArgumentValidation argumentValidation = default) {
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static string Repeat(this string @this, int count, ArgumentValidation argumentValidation = default) =>
+			@this.RepeatToBuilder(count, new StringBuilder(@this.Length * count.CoerceAtLeast(0)), argumentValidation).ToString();
+
+		/// <inheritdoc cref="Repeat(string, int, ArgumentValidation)"/>
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static StringBuilder RepeatToBuilder(this string @this, int count, ArgumentValidation argumentValidation = default) =>
+			@this.RepeatToBuilder(count, new StringBuilder(@this.Length * count.CoerceAtLeast(0)), argumentValidation);
+
+		/// <inheritdoc cref="Repeat(string, int, ArgumentValidation)"/>
+		public static StringBuilder RepeatToBuilder(this string @this, int count, StringBuilder output, ArgumentValidation argumentValidation = default) {
 			if (count < 0 && argumentValidation == ArgumentValidation.Lenient)
 				count = 0;
 
-			return new StringBuilder(@this.Length * count).Insert(0, @this, count).ToString();
+			return output.Insert(0, @this, count);
+		}
+
+		/// <inheritdoc cref="Repeat(string, int, ArgumentValidation)"/>
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static string Repeat(this string @this, int count, ArgumentValidation argumentValidation, string separator = "", string prefix = "", string suffix = "", string fallback = "") =>
+			@this.RepeatToBuilder(count, new StringBuilder(@this.Length * count.CoerceAtLeast(0)), separator, prefix, suffix, fallback, argumentValidation).ToString();
+
+		/// <inheritdoc cref="Repeat(string, int, ArgumentValidation)"/>
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static StringBuilder RepeatToBuilder(this string @this, int count, ArgumentValidation argumentValidation, string separator = "", string prefix = "", string suffix = "", string fallback = "") =>
+			@this.RepeatToBuilder(count, new StringBuilder(@this.Length * count.CoerceAtLeast(0)), separator, prefix, suffix, fallback, argumentValidation);
+		
+		/// <inheritdoc cref="Repeat(string, int, ArgumentValidation)"/>
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static StringBuilder RepeatToBuilder(this string @this, int count, StringBuilder output, ArgumentValidation argumentValidation, string separator = "", string prefix = "", string suffix = "", string fallback = "") =>
+			@this.RepeatToBuilder(count, output, separator, prefix, suffix, fallback, argumentValidation);
+
+		/// <inheritdoc cref="Repeat(string, int, ArgumentValidation)"/>
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static string Repeat(this string @this, int count, string separator, string prefix = "", string suffix = "", string fallback = "", ArgumentValidation argumentValidation = default) =>
+			@this.RepeatToBuilder(count, new StringBuilder(@this.Length * count.CoerceAtLeast(0)), separator, prefix, suffix, fallback, argumentValidation).ToString();
+
+		/// <inheritdoc cref="Repeat(string, int, ArgumentValidation)"/>
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static StringBuilder RepeatToBuilder(this string @this, int count, string separator, string prefix = "", string suffix = "", string fallback = "", ArgumentValidation argumentValidation = default) =>
+			@this.RepeatToBuilder(count, new StringBuilder(@this.Length * count.CoerceAtLeast(0)), separator, prefix, suffix, fallback, argumentValidation);
+		
+		/// <inheritdoc cref="Repeat(string, int, ArgumentValidation)"/>
+		public static StringBuilder RepeatToBuilder(this string @this, int count, StringBuilder output, string separator, string prefix = "", string suffix = "", string fallback = "", ArgumentValidation argumentValidation = default) {
+			if (count < 0) {
+				if (argumentValidation == ArgumentValidation.Lenient)
+					count = 0;
+
+				else throw new ArgumentOutOfRangeException(nameof(count), "Cannot repeat value a negative number of times.");
+			}
+
+			if (@this.Length * count == 0)
+				output.Append(fallback);
+
+			else {
+				output.Append(prefix).Append(@this);
+
+				for (var i = 1; i < count; ++i)
+					output.Append(separator).Append(@this);
+
+				output.Append(suffix);
+			}
+
+			return output;
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
