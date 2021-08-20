@@ -494,5 +494,21 @@ namespace LinqToYourDoom.Tests.Linq.Extensions {
 				(true, 666f)
 			}, enumerableOfDictionaries.Select(bag => (bag.TryGetValue("B", out var value), value)));
 		}
+
+		[Test]
+		public static void Eumerate() {
+			var invokeCount = 0;
+
+			Enumerable
+				.Range(0, 3)
+				.Each(_ => ++invokeCount)
+				.ToVariable(out var enumerable);
+
+			Assert.AreEqual(0, invokeCount);
+
+			enumerable.Enumerate();
+
+			Assert.AreEqual(3, invokeCount);
+		}
 	}
 }

@@ -794,5 +794,18 @@ namespace LinqToYourDoom {
 				if (trySelector.Invoke(item.Key, item.Value, ++i, out var @out))
 					yield return @out;
 		}
+
+		/// <summary>
+		/// Eagerly enumerates <paramref name="this"/> sequence,
+		/// effectively invoking the transformations in the pipeline, alike <see langword="foreach"/> would do.
+		/// </summary>
+		///
+		/// <returns> <paramref name="this"/> </returns>
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static IEnumerable<T> Enumerate<T>(this IEnumerable<T> @this) {
+			foreach (var _ in @this) ;
+
+			return @this;
+		}
 	}
 }
