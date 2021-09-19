@@ -270,7 +270,7 @@ namespace LinqToYourDoom.SourceGenerators.Utilities {
 				code.AppendLine($@"public static { TYPE } DeclineRatio(this { TYPE } @this, { TYPE } upper) => (upper - @this) / upper;");
 
 				code.AppendLine($@"/// <param name=""argumentValidation"">");
-				code.AppendLine($@"/// When <c><paramref name=""upper""/> &lt; <paramref name=""lower""/></c> or <c><paramref name=""upperOut""/> &lt; <paramref name=""lowerOut""/></c> and <paramref name=""argumentValidation""/> is <see cref=""ArgumentValidation.Lenient""/>,");
+				code.AppendLine($@"/// When <c><paramref name=""upper""/> &lt; <paramref name=""lower""/></c> and <paramref name=""argumentValidation""/> is <see cref=""ArgumentValidation.Lenient""/>,");
 				code.AppendLine($@"/// the unordered bounds will be silently swapped;");
 				code.AppendLine($@"/// otherwise, an <see cref=""ArgumentException""/> will be thrown.");
 				code.AppendLine($@"/// </param>");
@@ -292,7 +292,7 @@ namespace LinqToYourDoom.SourceGenerators.Utilities {
 				code.AppendLine($@"public static { TYPE } UncheckedProgressRatio(this { TYPE } @this, { TYPE } lower, { TYPE } upper) => (@this - lower) / (upper - lower);");
 
 				code.AppendLine($@"/// <param name=""argumentValidation"">");
-				code.AppendLine($@"/// When <c><paramref name=""upper""/> &lt; <paramref name=""lower""/></c> or <c><paramref name=""upperOut""/> &lt; <paramref name=""lowerOut""/></c> and <paramref name=""argumentValidation""/> is <see cref=""ArgumentValidation.Lenient""/>,");
+				code.AppendLine($@"/// When <c><paramref name=""upper""/> &lt; <paramref name=""lower""/></c> and <paramref name=""argumentValidation""/> is <see cref=""ArgumentValidation.Lenient""/>,");
 				code.AppendLine($@"/// the unordered bounds will be silently swapped;");
 				code.AppendLine($@"/// otherwise, an <see cref=""ArgumentException""/> will be thrown.");
 				code.AppendLine($@"/// </param>");

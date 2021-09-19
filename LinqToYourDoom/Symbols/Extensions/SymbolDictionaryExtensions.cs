@@ -5,7 +5,7 @@ namespace LinqToYourDoom {
 	public static class SymbolDictionaryExtensions {
 		/// <summary>
 		/// Retrieves the value associated with the given <paramref name="key"/>,
-		/// or throws a <see cref="KeyNotFoundException"> if the <paramref name="key"/> isn't registered.
+		/// or throws a <see cref="KeyNotFoundException"/> if the <paramref name="key"/> isn't registered.
 		/// </summary>
 		public static T Get<T>(this IReadOnlySymbolDictionary @this, Symbol<T> key) {
 			if (@this.TryGet(key, out var value))
@@ -25,7 +25,7 @@ namespace LinqToYourDoom {
 
 		/// <summary>
 		/// Adds a <paramref name="value"/> under the specified <paramref name="key"/> to <paramref name="this"/> <see cref="ISymbolDictionary"/>,
-		/// or throws an <see cref="ArgumentException"> if the <paramref name="key"/> is already registered.
+		/// or throws an <see cref="ArgumentException"/> if the <paramref name="key"/> is already registered.
 		/// </summary>
 		public static void Add<T>(this ISymbolDictionary @this, Symbol<T> key, T value) {
 			if (@this.TryGet(key, out _))

@@ -141,7 +141,7 @@ namespace LinqToYourDoom {
 		}
 
 
-		/// <inheritdoc cref="Assign{TDictionary, TKey, TValue}(TDictionary, IEnumerable{KeyValuePair{TKey, TValue?}}, IEqualityComparer{TValue}, ConflictHandling, Func{TValue, TValue, TValue}, string?)"/>
+		/// <inheritdoc cref="Assign{TDictionary, TKey, TValue}(TDictionary, IEnumerable{KeyValuePair{TKey, TValue}}, IEqualityComparer{TValue}, ConflictHandling, Func{TValue, TValue, TValue}, string?)"/>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static TDictionary Assign<TDictionary, TKey, TValue>(
 			this TDictionary @this,
@@ -162,7 +162,7 @@ namespace LinqToYourDoom {
 		/// Merges an<paramref name="other"/> dictionary into <paramref name="this"/> one,
 		/// pairing the objects using the dictionaries' keys,
 		/// following <see langword="null"/>-replacement rules of <see cref="IAssignable{TIn, TOut}"/>,
-		/// and leveraging <see cref="AssignableValueExtensions.Assign{T}(T?, T?, IEqualityComparer{T}, ConflictHandling, Func{T, T, T}, string?)"/>.
+		/// and leveraging <see cref="AssignableValueExtensions.Assign{T}(T, T, IEqualityComparer{T}, ConflictHandling, Func{T, T, T}, string?)"/>.
 		/// </para>
 		///
 		/// <para>

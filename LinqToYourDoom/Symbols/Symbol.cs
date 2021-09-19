@@ -21,7 +21,7 @@ namespace LinqToYourDoom {
 		public abstract Type Type { get; }
 
 		/// <inheritdoc cref="Symbol"/>
-		private protected Symbol() { }
+		private protected Symbol() {}
 
 		/// <inheritdoc/>
 		///

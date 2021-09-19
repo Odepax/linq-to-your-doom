@@ -3,7 +3,10 @@
 		<TargetFramework>net5.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
-		<NoWarn>$(NoWarn);1591</NoWarn> <!-- GenerateDocumentationFile:true triggers 1591-warnings whenever a public object doesn't have documentation... -->
+		<NoWarn>$(NoWarn);1591;1573;0419</NoWarn>
+		<!-- GenerateDocumentationFile:true triggers 1591-warnings whenever a public object doesn't have documentation... -->
+		<!-- 1573-warnings are triggered when there IS a docstring, but SOME elements are missing, e.g. a parameter doesn't have documentation, which, they often wouldn't need anyway... -->
+		<!-- 0419-warnings are triggered where an ambiguous reference sneaks into cref doctag attributes, which VS2019 handles nicely anyway... -->
 	</PropertyGroup>
 
 	<PropertyGroup>

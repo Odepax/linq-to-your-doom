@@ -43,12 +43,22 @@ namespace LinqToYourDoom.SourceGenerators.Utilities {
 				TYPES += ", T" + i;
 				ITEMS += ", @this.Item" + i;
 
-				code.AppendLine($@"/// <summary>");
-				code.AppendLine($@"/// Equivalent of <see cref=""Enumerable.Select{{TSource, TResult}}(IEnumerable{{TSource}}, Func{{TSource, TResult}})""/> for a value tuple.");
-				code.AppendLine($@"///");
-				code.AppendLine($@"/// Note that <see cref=""Enumerable.Select{{TSource, TResult}}(IEnumerable{{TSource}}, Func{{TSource, TResult}})""/> is <b>lazy</b>,");
-				code.AppendLine($@"/// whereas <see cref=""To{{{ TYPES }, TOut}}(({ TYPES }), Func{{{ TYPES }, TOut}})""/> is <b>eager</b>.");
-				code.AppendLine($@"/// </summary>");
+				// 6452162F-ACE2-4D6B-8D91-BC98B9115762
+				//
+				// The compiler doesn't seem to understand "ValueTuple{T1, ..., T8}" with 8 generics,
+				// and generates a CS1574 warning, complaining that the XML comment has a "cref" attribute
+				// that could not be resolved.
+				//
+				// I think once you understand the 6 other overloads, grasping the 7th should be ok,
+				// even without the documentation...
+				if (i < 8) {
+					code.AppendLine($@"/// <summary>");
+					code.AppendLine($@"/// Equivalent of <see cref=""Enumerable.Select{{TSource, TResult}}(IEnumerable{{TSource}}, Func{{TSource, TResult}})""/> for a value tuple.");
+					code.AppendLine($@"///");
+					code.AppendLine($@"/// Note that <see cref=""Enumerable.Select{{TSource, TResult}}(IEnumerable{{TSource}}, Func{{TSource, TResult}})""/> is <b>lazy</b>,");
+					code.AppendLine($@"/// whereas <see cref=""To{{{ TYPES }, TOut}}(ValueTuple{{{ TYPES }}}, Func{{{ TYPES }, TOut}})""/> is <b>eager</b>.");
+					code.AppendLine($@"/// </summary>");
+				}
 				code.AppendLine($@"[MethodImpl(MethodImplOptions.AggressiveInlining)]");
 				code.AppendLine($@"public static TOut To<{ TYPES }, TOut>(this ({ TYPES }) @this, Func<{ TYPES }, TOut> selector) => selector.Invoke({ ITEMS });");
 			}
@@ -62,12 +72,16 @@ namespace LinqToYourDoom.SourceGenerators.Utilities {
 				TYPES += ", T" + i;
 				ITEMS += ", @this.Item" + i;
 
-				code.AppendLine($@"/// <summary>");
-				code.AppendLine($@"/// Equivalent of <see cref=""List{{T}}.ForEach(Action{{T}})""/> for a value tuple.");
-				code.AppendLine($@"///");
-				code.AppendLine($@"/// Note that both <see cref=""List{{T}}.ForEach(Action{{T}})""/>");
-				code.AppendLine($@"/// and <see cref=""Do{{{ TYPES }}}(({ TYPES }), Action{{{ TYPES }}})""/> are <b>eager</b>.");
-				code.AppendLine($@"/// </summary>");
+				// The compiler doesn't understand ValueTuple with 8 generics in the docstring,
+				// and generates a CS1574 warning. @see 6452162F-ACE2-4D6B-8D91-BC98B9115762
+				if (i < 8) {
+					code.AppendLine($@"/// <summary>");
+					code.AppendLine($@"/// Equivalent of <see cref=""List{{T}}.ForEach(Action{{T}})""/> for a value tuple.");
+					code.AppendLine($@"///");
+					code.AppendLine($@"/// Note that both <see cref=""List{{T}}.ForEach(Action{{T}})""/>");
+					code.AppendLine($@"/// and <see cref=""Do{{{ TYPES }}}(ValueTuple{{{ TYPES }}}, Action{{{ TYPES }}})""/> are <b>eager</b>.");
+					code.AppendLine($@"/// </summary>");
+				}
 				code.AppendLine($@"[MethodImpl(MethodImplOptions.AggressiveInlining)]");
 				code.AppendLine($@"public static ({ TYPES }) Do<{ TYPES }>(this ({ TYPES }) @this, Action<{ TYPES }> action) {{"); {
 					code.AppendLine($@"action.Invoke({ ITEMS });");
@@ -75,13 +89,17 @@ namespace LinqToYourDoom.SourceGenerators.Utilities {
 				}
 				code.AppendLine($@"}}");
 
-				code.AppendLine($@"/// <summary>");
-				code.AppendLine($@"/// Equivalent of <see cref=""Do{{{ TYPES }}}(({ TYPES }), Action{{{ TYPES }}})""/>,");
-				code.AppendLine($@"/// but taking a <see cref=""Func{{{ TYPES }, TResult}}""/> and discarding the returned value.");
-				code.AppendLine($@"///");
-				code.AppendLine($@"/// This override discards the returned value instead of blocking the compilation");
-				code.AppendLine($@"/// when <paramref name=""action""/> is a method that does not return <see cref=""void""/>.");
-				code.AppendLine($@"/// </summary>");
+				// <see cref="ValueTuple{...}"/> with 8 generics generates a CS1574 warning.
+				// @see 6452162F-ACE2-4D6B-8D91-BC98B9115762
+				if (i < 8) {
+					code.AppendLine($@"/// <summary>");
+					code.AppendLine($@"/// Equivalent of <see cref=""Do{{{ TYPES }}}(ValueTuple{{{ TYPES }}}, Action{{{ TYPES }}})""/>,");
+					code.AppendLine($@"/// but taking a <see cref=""Func{{{ TYPES }, TResult}}""/> and discarding the returned value.");
+					code.AppendLine($@"///");
+					code.AppendLine($@"/// This override discards the returned value instead of blocking the compilation");
+					code.AppendLine($@"/// when <paramref name=""action""/> is a method that does not return <see cref=""void""/>.");
+					code.AppendLine($@"/// </summary>");
+				}
 				code.AppendLine($@"[MethodImpl(MethodImplOptions.AggressiveInlining)]");
 				code.AppendLine($@"public static ({ TYPES }) Do<{ TYPES }, T_>(this ({ TYPES }) @this, Func<{ TYPES }, T_> action) {{"); {
 					code.AppendLine($@"_ = action.Invoke({ ITEMS });");

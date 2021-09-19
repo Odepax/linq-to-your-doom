@@ -37,7 +37,7 @@ namespace LinqToYourDoom {
 		}
 
 		/// <summary>
-		/// Throws an <see cref="InvalidOperationException"> if the current indentation level
+		/// Throws an <see cref="InvalidOperationException"/> if the current indentation level
 		/// of this <see cref="IndentedStringBuilder"/> isn't as <paramref name="expected"/>.
 		/// </summary>
 		public IndentedStringBuilder AssertIndentLevel(int expected = 0) {

@@ -14,18 +14,12 @@ namespace LinqToYourDoom {
 
 		/// <summary>
 		/// The data from the <b>assigned</b> object takes prevalence.
-		///
-		/// Leave existing files as they are.
-		/// Existing directories won't provision their children.
 		/// </summary>
 		Ignore,
 
 		/// <summary>
-		/// The conflicting pieces of data are somehow combined,
+		/// The conflicting pieces of data are somehow combined;
 		/// however it's done is left to the implementation.
-		///
-		/// Files get their contents appended to existing ones.
-		/// Directories preserve existing children.
 		/// </summary>
 		Merge,
 
