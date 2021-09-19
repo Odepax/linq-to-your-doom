@@ -15,7 +15,7 @@ namespace LinqToYourDoom.Tests.System.Extensions {
 
 			var derived = source
 				.As<string>()
-				.Do(it => {
+				.Into(it => {
 					++callCount;
 					upperCase = it.ToUpperInvariant();
 				})

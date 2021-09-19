@@ -169,7 +169,7 @@ any.GetDeclaredType();
 
 any
    .As<Other>()
-   .Do(it => {
+   .Into(it => {
       if (it.CanDoSomething)
          it.DoSomething();
    })
@@ -182,7 +182,7 @@ There's also an underdeveloped `Lazy` counterpart:
 ```cs
 lazy
    .As<Other>() // Lazy<T> => Lazy<Other>
-   .Do(it => {
+   .Into(it => {
       if (it.CanDoSomething)
          it.DoSomething();
    })

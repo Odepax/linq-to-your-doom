@@ -103,24 +103,29 @@ namespace LinqToYourDoom {
 		/// Equivalent of <see cref="List{T}.ForEach(Action{T})"/> for a single object.
 		///
 		/// Note that both <see cref="List{T}.ForEach(Action{T})"/>
-		/// and <see cref="Do{T}(T, Action{T})"/> are <b>eager</b>.
+		/// and <see cref="Into{T}(T, Action{T})"/> are <b>eager</b>.
 		/// </summary>
+		///
+		/// <remarks>
+		/// This method could have been named <i>Also</i>, like its <see href="https://kotlinlang.org/docs/scope-functions.html#also">Kotlin counterpart</see>,
+		/// but <c>Math.random()</c> settled on <i>Into</i>.
+		/// </remarks>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static T Do<T>(this T @this, Action<T> action) {
+		public static T Into<T>(this T @this, Action<T> action) {
 			action.Invoke(@this);
 
 			return @this;
 		}
 
 		/// <summary>
-		/// Equivalent of <see cref="Do{T}(T, Action{T})"/>,
+		/// Equivalent of <see cref="Into{T}(T, Action{T})"/>,
 		/// but taking a <see cref="Func{T, TResult}"/> and discarding the returned value.
 		///
 		/// This override discards the returned value instead of blocking the compilation
 		/// when <paramref name="action"/> is a method that does not return <see cref="void"/>.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static T Do<T, T_>(this T @this, Func<T, T_> action) {
+		public static T Into<T, T_>(this T @this, Func<T, T_> action) {
 			_ = action.Invoke(@this);
 
 			return @this;
@@ -130,24 +135,24 @@ namespace LinqToYourDoom {
 		/// Equivalent of <see cref="List{T}.ForEach(Action{T})"/> for a key-value pair.
 		///
 		/// Note that both <see cref="List{T}.ForEach(Action{T})"/>
-		/// and <see cref="Do{TKey, TValue}(KeyValuePair{TKey, TValue}, Action{TKey, TValue})"/> are <b>eager</b>.
+		/// and <see cref="Into{TKey, TValue}(KeyValuePair{TKey, TValue}, Action{TKey, TValue})"/> are <b>eager</b>.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static KeyValuePair<TKey, TValue> Do<TKey, TValue>(this KeyValuePair<TKey, TValue> @this, Action<TKey, TValue> action) {
+		public static KeyValuePair<TKey, TValue> Into<TKey, TValue>(this KeyValuePair<TKey, TValue> @this, Action<TKey, TValue> action) {
 			action.Invoke(@this.Key, @this.Value);
 
 			return @this;
 		}
 
 		/// <summary>
-		/// Equivalent of <see cref="Do{TKey, TValue}(KeyValuePair{TKey, TValue}, Action{TKey, TValue})"/>,
+		/// Equivalent of <see cref="Into{TKey, TValue}(KeyValuePair{TKey, TValue}, Action{TKey, TValue})"/>,
 		/// but taking a <see cref="Func{T1, T2, TResult}"/> and discarding the returned value.
 		///
 		/// This override discards the returned value instead of blocking the compilation
 		/// when <paramref name="action"/> is a method that does not return <see cref="void"/>.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static KeyValuePair<TKey, TValue> Do<TKey, TValue, T_>(this KeyValuePair<TKey, TValue> @this, Func<TKey, TValue, T_> action) {
+		public static KeyValuePair<TKey, TValue> Into<TKey, TValue, T_>(this KeyValuePair<TKey, TValue> @this, Func<TKey, TValue, T_> action) {
 			_ = action.Invoke(@this.Key, @this.Value);
 
 			return @this;
