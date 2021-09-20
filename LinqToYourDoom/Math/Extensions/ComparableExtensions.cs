@@ -17,7 +17,6 @@ namespace LinqToYourDoom {
 		/// <paramref name="min"/> and <paramref name="max"/> will be silently swapped;
 		/// otherwise, an <see cref="ArgumentException"/> is thrown.
 		/// </param>
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static T CoerceIn<T>(this T @this, T min, T max, ArgumentValidation argumentValidation = default) where T : IComparable<T> {
 			if (max.CompareTo(min) < 0) {
 				if (argumentValidation == ArgumentValidation.Lenient)
@@ -26,11 +25,16 @@ namespace LinqToYourDoom {
 				else throw new ArgumentException(".CoerceIn(min, max) must be called with parameters that respect min <= max.", nameof(max));
 			}
 
-			return (
-				  @this.CompareTo(min) < 0 ? min
-				: max.CompareTo(@this) < 0 ? max
-				: @this
-			);
+			return @this.UncheckedCoerceIn(min, max);
 		}
+
+		/// <summary>
+		/// <see cref="CoerceIn{T}(T, T, T, ArgumentValidation)"/>, but without bounds validation.
+		/// </summary>
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static T UncheckedCoerceIn<T>(this T @this, T min, T max) where T : IComparable<T> =>
+			  @this.CompareTo(min) < 0 ? min
+			: max.CompareTo(@this) < 0 ? max
+			: @this;
 	}
 }

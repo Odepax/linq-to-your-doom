@@ -12,9 +12,11 @@ namespace LinqToYourDoom.SourceGenerators {
 		public void Execute(GeneratorExecutionContext context) {
 			GenerateCsFile(context, nameof(BooleanExtensions), BooleanExtensions.Generate);
 			GenerateCsFile(context, nameof(EnumerableExtensions), EnumerableExtensions.Generate);
+			GenerateCsFile(context, nameof(IRandomD), IRandomD.Generate);
 			GenerateCsFile(context, nameof(MathD), MathD.Generate);
 			GenerateCsFile(context, nameof(NumberExtensions), NumberExtensions.Generate);
 			GenerateCsFile(context, nameof(ObjectExtensions), ObjectExtensions.Generate);
+			GenerateCsFile(context, nameof(RandomD), RandomD.Generate);
 			GenerateCsFile(context, nameof(TryFunc), TryFunc.Generate);
 			GenerateCsFile(context, nameof(ValueTupleExtensions), ValueTupleExtensions.Generate);
 		}
