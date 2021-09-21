@@ -37,7 +37,7 @@ namespace LinqToYourDoom.Tests.Symbols {
 		static readonly Symbol<DateTime> C = new();
 		static readonly Symbol<Camel> D = new();
 
-		sealed class Camel { }
+		sealed class Camel {}
 
 		static readonly Camel aziz = new();
 		static readonly Camel light = new();
@@ -255,6 +255,39 @@ namespace LinqToYourDoom.Tests.Symbols {
 
 			exception = Assert.Throws<AssignConflictException>(() => x.ShallowClone().Assign(y, ConflictHandling.Throw));
 			StringAssert.IsMatch(/* lang=regex */ @"\[Symbol<Camel>#\d+\]", exception!.Path.ToString());
+		}
+
+		[Test]
+		public static void AssignCustomCallbacks() {
+			var a = new SymbolDictionary();
+
+			a.Set(A, "A");
+			a.Set(B, 3.14d);
+			a.Set(C, new DateTime(2021, 03, 21));
+			a.Set(D, aziz);
+
+			var b = new SymbolDictionary();
+
+			b.Set(A, "B");
+			b.Set(C, new DateTime(2022, 01, 12));
+			b.Set(D, light);
+
+			var c = a.Assign(b, ConflictHandling.Merge,
+				// Here _conflictHandling is the constant ConflictHandling.Merge, so it's safe to ignore the parameter.
+				// Same for _symbol, it's not needed here.
+				AssignCallbackDictionary.New(4)
+					.Add<string>((_symbol, a, b, _conflictHandling) => string.Concat(a, b))
+					.Add<double>((_symbol, a, b, _conflictHandling) => a + b)
+					.Add<DateTime>((_symbol, a, b, _conflictHandling) => MathD.Max(a, b))
+					.Add<Camel>((_symbol, a, b, _conflictHandling) => a == aziz ? a : b)
+			);
+
+			Assert.AreEqual(new[] {
+				new KeyValuePair<Symbol, object>(A, "AB"),
+				new KeyValuePair<Symbol, object>(B, 3.14d),
+				new KeyValuePair<Symbol, object>(C, new DateTime(2022, 01, 12)),
+				new KeyValuePair<Symbol, object>(D, aziz)
+			}, c);
 		}
 	}
 }

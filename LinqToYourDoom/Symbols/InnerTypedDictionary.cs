@@ -2,8 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Reflection;
-using System.Runtime.CompilerServices;
 
 namespace LinqToYourDoom {
 	/// <summary>
@@ -25,8 +23,7 @@ namespace LinqToYourDoom {
 	/// </remarks>
 	public readonly struct InnerTypedDictionary<TKey, TValue> :
 		IReadOnlyCollection<KeyValuePair<TKey, TValue>>,
-		IShallowCloneable<InnerTypedDictionary<TKey, TValue>>,
-		IAssignable<IEnumerable<KeyValuePair<TKey, TValue>>, InnerTypedDictionary<TKey, TValue>>
+		IShallowCloneable<InnerTypedDictionary<TKey, TValue>>
 	where TKey : notnull {
 		public static InnerTypedDictionary<TKey, TValue> New() => new(new());
 		public static InnerTypedDictionary<TKey, TValue> New(int capacity) => new(new(capacity));
@@ -298,125 +295,38 @@ namespace LinqToYourDoom {
 		// Assignable
 		// ----
 
-		public InnerTypedDictionary<TKey, TValue> Assign(IEnumerable<KeyValuePair<TKey, TValue>> other, ConflictHandling conflictHandling = default) {
+		/// <summary>
+		/// Assigns values from an<paramref name="other"/> dictionary.
+		///
+		/// For each key-value-pair, <see cref="Assign(IEnumerable{KeyValuePair{TKey, TValue}}, ConflictHandling, Func{TKey, TValue, TValue, ConflictHandling, TValue})"/>
+		/// follows <see cref="IAssignable{TIn, TOut}.Assign(TIn, ConflictHandling)"/>'s first rules
+		/// by privileging non-<see langword="default"/> values,
+		/// but otherwise relying on the <paramref name="assign"/> delegate
+		/// to route values and perform the assignment heavy work.
+		///
+		/// If an <see cref="AssignConflictException"/> is thrown,
+		/// <see cref="Assign(IEnumerable{KeyValuePair{TKey, TValue}}, ConflictHandling, Func{TKey, TValue, TValue, ConflictHandling, TValue})"/>
+		/// will prepend the key to the <see cref="AssignConflictException.Path"/> automatically.
+		/// </summary>
+		///
+		/// <returns> <see langword="this"/>. </returns>
+		public InnerTypedDictionary<TKey, TValue> Assign(IEnumerable<KeyValuePair<TKey, TValue>> other, ConflictHandling conflictHandling, Func<TKey, TValue, TValue, ConflictHandling, TValue> assign) {
 			foreach (var (key, otherValue) in other)
 				try {
 					Storage[key] = (
 						  !Storage.TryGetValue(key, out var thisValue) || Equals(thisValue, default) ? otherValue
 						: Equals(otherValue, default) ? thisValue
-						: AssignFromReflection(thisValue, otherValue, conflictHandling)
+						: assign.Invoke(key, thisValue, otherValue, conflictHandling)
 					);
 				}
 
 				catch (AssignConflictException conflict) {
-					conflict.PrependPropertyAndIndexer(null, key?.ToString());
+					conflict.PrependPropertyAndIndexer(null, key.ToString());
 
 					throw;
 				}
 
 			return this;
 		}
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		static TValue AssignFromReflection(TValue a, TValue b, ConflictHandling conflictHandling) {
-			if (a is string a_string && b is string b_string)
-				return AssignString(a_string, b_string, conflictHandling);
-
-			var a_type = a!.GetType();
-			var b_type = b!.GetType();
-
-			if (IsAssignable(a_type, b_type))
-				return AssignAssignable(a_type, b_type, a, b, conflictHandling);
-
-			if (IsDictionary(a_type, b_type, out var key_type, out var a_value, out var b_value)) {
-				if (a_value == typeof(string) && b_value == typeof(string))
-					return AssignStringDictionary(key_type, a, b, conflictHandling);
-
-				if (IsAssignable(a_value, b_value))
-					return AssignAssignableDictionary(key_type, a_value, a, b, conflictHandling);
-
-				if (b_value.Inherits(a_value))
-					return AssignDictionary(key_type, a_value, a, b, conflictHandling);
-			}
-
-			return a.Assign(b, conflictHandling, (_, _) => throw new InvalidOperationException($"Value { a } is not mergeable from value { b }."))!;
-		}
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		static bool IsAssignable(Type a, Type b) =>
-			a.Implements(typeof(IAssignable<,>).MakeGenericType(b, a));
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		static bool IsDictionary(Type a, Type b,
-			[NotNullWhen(true)] out Type? key_type,
-			[NotNullWhen(true)] out Type? a_value,
-			[NotNullWhen(true)] out Type? b_value
-		) {
-			if (
-				   a.ImplementsGeneric(typeof(IDictionary<,>), out var iDictionary) // A is IDictionary
-				&& b.ImplementsGeneric(typeof(IEnumerable<>), out var iEnumerable) // B is IEnumerable
-				&& iEnumerable.GenericTypeArguments[0].GetGenericTypeDefinition() == typeof(KeyValuePair<,>) // B<0> is KeyValuePair
-				&& iEnumerable.GenericTypeArguments[0].GenericTypeArguments.ToVariable(out var kvp_generics)[0].Inherits(iDictionary.GenericTypeArguments[0]) // B<0><K> is A<K>
-			) {
-				key_type = iDictionary.GenericTypeArguments[0];
-				a_value = iDictionary.GenericTypeArguments[1];
-				b_value = kvp_generics[1];
-
-				return true;
-			}
-
-			key_type = default;
-			a_value = default;
-			b_value = default;
-
-			return false;
-		}
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		static TValue AssignString(string a, string b, ConflictHandling conflictHandling) =>
-			(TValue) (object) a.Assign(b, StringComparison.InvariantCulture, conflictHandling, string.Concat);
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		static TValue AssignAssignable(Type a_type, Type b_type, TValue a, TValue b, ConflictHandling conflictHandling) =>
-			(TValue) typeof(InnerTypedDictionary<TKey, TValue>)
-				.GetMethod(nameof(AssignAssignable_method), BindingFlags.Static | BindingFlags.NonPublic)!
-				.MakeGenericMethod(b_type, a_type)
-				.Invoke(null, BindingFlags.DoNotWrapExceptions, null, new object?[] { a, b, conflictHandling }, null)!;
-
-		static TOut AssignAssignable_method<TIn, TOut>(TOut a, TIn b, ConflictHandling conflictHandling)
-		where TIn : TValue
-		where TOut : TValue, IAssignable<TIn, TOut> =>
-			a.Assign(b, conflictHandling);
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		static TValue AssignAssignableDictionary(Type k_type, Type v_type, TValue a, TValue b, ConflictHandling conflictHandling) =>
-			(TValue) typeof(InnerTypedDictionary<TKey, TValue>)
-				.GetMethod(nameof(AssignAssignableDictionary_method), BindingFlags.Static | BindingFlags.NonPublic)!
-				.MakeGenericMethod(k_type, v_type)
-				.Invoke(null, BindingFlags.DoNotWrapExceptions, null, new object?[] { a, b, conflictHandling }, null)!;
-
-		static IDictionary<TK, TV> AssignAssignableDictionary_method<TK, TV>(IDictionary<TK, TV> a, IEnumerable<KeyValuePair<TK, TV>> b, ConflictHandling conflictHandling)
-		where TV : IAssignable<TV, TV> =>
-			a.Assign(b, conflictHandling);
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		static TValue AssignStringDictionary(Type k_type, TValue a, TValue b, ConflictHandling conflictHandling) =>
-			(TValue) typeof(InnerTypedDictionary<TKey, TValue>)
-				.GetMethod(nameof(AssignStringDictionary_method), BindingFlags.Static | BindingFlags.NonPublic)!
-				.MakeGenericMethod(k_type)
-				.Invoke(null, BindingFlags.DoNotWrapExceptions, null, new object?[] { a, b, conflictHandling }, null)!;
-
-		static IDictionary<TK, string> AssignStringDictionary_method<TK>(IDictionary<TK, string> a, IEnumerable<KeyValuePair<TK, string>> b, ConflictHandling conflictHandling) =>
-			a.Assign(b, StringComparison.InvariantCulture, conflictHandling, string.Concat);
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		static TValue AssignDictionary(Type k_type, Type v_type, TValue a, TValue b, ConflictHandling conflictHandling) =>
-			(TValue) typeof(InnerTypedDictionary<TKey, TValue>)
-				.GetMethod(nameof(AssignDictionary_method), BindingFlags.Static | BindingFlags.NonPublic)!
-				.MakeGenericMethod(k_type, v_type)
-				.Invoke(null, BindingFlags.DoNotWrapExceptions, null, new object?[] { a, b, conflictHandling }, null)!;
-
-		static IDictionary<TK, TV> AssignDictionary_method<TK, TV>(IDictionary<TK, TV> a, IEnumerable<KeyValuePair<TK, TV>> b, ConflictHandling conflictHandling) =>
-			a.Assign(b, conflictHandling, (_, _) => throw new InvalidOperationException($"Dictionary value { a } is not mergeable from value { b }."));
 	}
 }

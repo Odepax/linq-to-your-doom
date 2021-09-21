@@ -34,8 +34,20 @@ namespace LinqToYourDoom {
 
 		public SymbolDictionary ShallowClone() => new(Storage.ShallowClone());
 
-		public SymbolDictionary Assign(IReadOnlySymbolDictionary other, ConflictHandling conflictHandling = ConflictHandling.Replace) {
-			Storage.Assign(other!, conflictHandling);
+		public SymbolDictionary Assign(IReadOnlySymbolDictionary other, ConflictHandling conflictHandling = default) {
+			Storage!.Assign(other, conflictHandling);
+
+			return this;
+		}
+
+		public SymbolDictionary Assign(IReadOnlySymbolDictionary other, ConflictHandling conflictHandling, AssignCallbackDictionary assignCallbacks) {
+			Storage!.Assign(other!, conflictHandling, assignCallbacks.AssignCallback!);
+
+			return this;
+		}
+
+		public SymbolDictionary Assign(IReadOnlySymbolDictionary other, AssignCallbackDictionary assignCallbacks, ConflictHandling conflictHandling = default) {
+			Storage!.Assign(other!, conflictHandling, assignCallbacks.AssignCallback!);
 
 			return this;
 		}

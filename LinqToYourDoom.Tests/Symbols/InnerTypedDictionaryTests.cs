@@ -398,7 +398,7 @@ namespace LinqToYourDoom.Tests.Symbols {
 			}
 
 			var exception = Assert.Throws<AssignConflictException>(() => x.ShallowClone().Assign(y, ConflictHandling.Throw));
-			StringAssert.IsMatch(/* lang=regex */ @"\[Symbol<String>#\d+\]", exception!.Path.ToString());
+			StringAssert.IsMatch(/* lang=regex */ @"\[Symbol<String>#\d+\]", exception!.Path);
 
 			// Assign override (class)
 			// ----
@@ -425,7 +425,7 @@ namespace LinqToYourDoom.Tests.Symbols {
 			}
 
 			exception = Assert.Throws<AssignConflictException>(() => x.ShallowClone().Assign(y, ConflictHandling.Throw));
-			StringAssert.IsMatch(/* lang=regex */ @"\[Symbol<Camel>#\d+\]", exception!.Path.ToString());
+			StringAssert.IsMatch(/* lang=regex */ @"\[Symbol<Camel>#\d+\]", exception!.Path);
 		}
 
 		sealed class Sample : IAssignable<Sample, Sample> {
