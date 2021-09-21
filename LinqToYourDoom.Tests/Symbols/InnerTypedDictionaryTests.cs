@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using NUnit.Framework;
 
 namespace LinqToYourDoom.Tests.Symbols {
@@ -16,7 +17,7 @@ namespace LinqToYourDoom.Tests.Symbols {
 		static readonly Camel light = new();
 
 		[Test]
-		public static void Crud() {
+		public static void Core_CRUD_methods() {
 			string? a;
 			double b;
 			DateTime c;
@@ -151,6 +152,203 @@ namespace LinqToYourDoom.Tests.Symbols {
 			Assert.IsFalse(dictionary.TryGet(D, out d));
 			Assert.AreSame(default(Camel), d);
 		}
+
+		sealed class Camel2 {
+			public readonly int Id;
+			public Camel2(int id) => Id = id;
+		}
+
+		static readonly Symbol<int> INT = new();
+		static readonly Symbol<int> ZRO = new();
+		static readonly Symbol<Guid> VAL = new();
+		static readonly Symbol<Camel2> REF = new();
+		static readonly Symbol<Camel2> NUL = new();
+		static readonly Symbol<Sample2> SAM = new();
+		static readonly Symbol<Sample2> SAN = new();
+
+		[Test]
+		public static void Extra_methods() {
+			var dictionary = InnerTypedDictionary<Symbol, object>.New();
+
+			Guid out_VAL;
+			Camel2? out_REF;
+			Camel2? out_NUL;
+
+			Assert.IsFalse(dictionary.TryGet(VAL, out out_VAL));
+			Assert.IsFalse(dictionary.TryGet(REF, out out_REF));
+			Assert.IsFalse(dictionary.TryGet(NUL, out out_NUL));
+			Assert.AreEqual(Guid.Empty, out_VAL);
+			Assert.IsNull(out_REF);
+			Assert.IsNull(out_NUL);
+
+			dictionary.Set(VAL, Guid.NewGuid());
+			dictionary.Set(REF, new Camel2(42));
+
+			Assert.IsTrue(dictionary.TryGet(VAL, out out_VAL));
+			Assert.Throws<InvalidCastException>(() => dictionary.TryGet<Vector2>(VAL, out _));
+			Assert.IsTrue(dictionary.TryGet(REF, out out_REF));
+			Assert.IsFalse(dictionary.TryGet(NUL, out out_NUL));
+			Assert.AreNotEqual(Guid.Empty, out_VAL);
+			Assert.AreEqual(42, out_REF!.Id);
+			Assert.IsNull(out_NUL);
+
+			Assert.IsTrue(dictionary.TryRemove(REF, out out_REF));
+			Assert.AreEqual(42, out_REF!.Id);
+
+			Assert.IsFalse(dictionary.TryRemove(REF, out out_REF));
+			Assert.IsNull(out_REF);
+
+			Assert.IsFalse(dictionary.TryGet(REF, out out_REF));
+			Assert.IsNull(out_REF);
+
+			dictionary.Clear();
+
+			Assert.IsFalse(dictionary.TryGet(VAL, out out_VAL));
+			Assert.IsFalse(dictionary.TryGet(REF, out out_REF));
+			Assert.IsFalse(dictionary.TryGet(NUL, out out_NUL));
+			Assert.AreEqual(Guid.Empty, out_VAL);
+			Assert.IsNull(out_REF);
+			Assert.IsNull(out_NUL);
+		}
+
+		class Sample3 : IDisposable {
+			public bool IsDisposed = false;
+			public void Dispose() => IsDisposed = true;
+		}
+
+		[Test]
+		public static void Set_Remove_Clear_AndDispose() {
+			var a = new Sample3();
+			var b = new Sample3();
+			var c = new Sample3();
+			var d = new Sample3();
+
+			var dictionary = InnerTypedDictionary<int, object>.New();
+
+			dictionary.Set(1, a);
+			dictionary.Set(2, b);
+			dictionary.Set(3, c);
+
+			dictionary.SetAndDispose(1, d);
+
+			Assert.AreEqual(new[] { d, b, c }, dictionary.Values);
+			Assert.IsTrue(a.IsDisposed);
+			Assert.IsFalse(b.IsDisposed);
+			Assert.IsFalse(c.IsDisposed);
+			Assert.IsFalse(d.IsDisposed);
+
+			dictionary.RemoveAndDispose(2);
+
+			Assert.AreEqual(new[] { d, c }, dictionary.Values);
+			Assert.IsTrue(a.IsDisposed);
+			Assert.IsTrue(b.IsDisposed);
+			Assert.IsFalse(c.IsDisposed);
+			Assert.IsFalse(d.IsDisposed);
+
+			dictionary.ClearAndDispose();
+
+			Assert.IsEmpty(dictionary);
+			Assert.IsTrue(a.IsDisposed);
+			Assert.IsTrue(b.IsDisposed);
+			Assert.IsTrue(c.IsDisposed);
+			Assert.IsTrue(d.IsDisposed);
+		}
+
+		[Test]
+		public static void Get() {
+			var dictionary = InnerTypedDictionary<Symbol, object>.New();
+
+			dictionary.Set(REF, new Camel2(42));
+
+			Assert.AreEqual(42, dictionary.Get<Camel2>(REF).Id);
+			Assert.AreSame(dictionary.Get<Camel2>(REF), dictionary.Get<object>(REF));
+			Assert.Throws<KeyNotFoundException>(() => dictionary.Get<Camel2>(NUL));
+		}
+
+		[Test]
+		public static void Set() {
+			var dictionary = InnerTypedDictionary<Symbol, object>.New();
+
+			dictionary.Set(INT, 1);
+			dictionary.TrySet(INT, 2);
+			dictionary.TryGet<int>(INT, out var i);
+
+			Assert.AreEqual(1, i);
+
+			dictionary.Set(ZRO, 0);
+			dictionary.TrySet(ZRO, 3);
+			dictionary.TryGet(ZRO, out i);
+
+			Assert.AreEqual(0, i);
+
+			Assert.Throws<ArgumentException>(() => dictionary.Add(INT, 2));
+		}
+
+		[Test]
+		public static void GetOrDefault_factory() {
+			var invokeCount = 0;
+			var dictionary = InnerTypedDictionary<Symbol, object>.New();
+
+			dictionary.Set(INT, 2048);
+
+			Assert.AreEqual(2048, dictionary.GetOrDefault(INT, () => { ++invokeCount; return 100; }));
+			Assert.AreEqual(0, invokeCount);
+
+			Assert.AreEqual(100, dictionary.GetOrDefault(ZRO, () => { ++invokeCount; return 100; }));
+			Assert.AreEqual(1, invokeCount);
+		}
+
+		[Test]
+		public static void GetOrSet_value() {
+			var dictionary = InnerTypedDictionary<Symbol, object>.New();
+
+			dictionary.Set(INT, 2048);
+
+			Assert.AreEqual(2048, dictionary.GetOrSet(INT, 100));
+			Assert.AreEqual(2048, dictionary.Get<int>(INT));
+
+			Assert.AreEqual(100, dictionary.GetOrSet(ZRO, 100));
+			Assert.AreEqual(100, dictionary.Get<int>(ZRO));
+		}
+
+		[Test]
+		public static void GetOrSet_factory() {
+			var invokeCount = 0;
+			var dictionary = InnerTypedDictionary<Symbol, object>.New();
+
+			dictionary.Set(INT, 2048);
+
+			Assert.AreEqual(2048, dictionary.GetOrSet(INT, () => { ++invokeCount; return 100; }));
+			Assert.AreEqual(0, invokeCount);
+			Assert.AreEqual(2048, dictionary.Get<int>(INT));
+
+			Assert.AreEqual(100, dictionary.GetOrSet(ZRO, () => { ++invokeCount; return 100; }));
+			Assert.AreEqual(1, invokeCount);
+			Assert.AreEqual(100, dictionary.Get<int>(ZRO));
+		}
+
+		class Sample2 {
+			public int Value;
+		}
+
+		[Test]
+		public static void GetOrSet_action() {
+			var invokeCount = 0;
+			var dictionary = InnerTypedDictionary<Symbol, object>.New();
+
+			dictionary.Set(SAM, new Sample2 { Value = 2048 });
+
+			Assert.AreEqual(2048, dictionary.GetOrSet<Sample2>(SAM, sample => { ++invokeCount; sample.Value = 100; }).Value);
+			Assert.AreEqual(0, invokeCount);
+			Assert.AreEqual(2048, dictionary.Get<Sample2>(SAM).Value);
+
+			Assert.AreEqual(100, dictionary.GetOrSet<Sample2>(SAN, sample => { ++invokeCount; sample.Value = 100; }).Value);
+			Assert.AreEqual(1, invokeCount);
+			Assert.AreEqual(100, dictionary.Get<Sample2>(SAN).Value);
+		}
+
+		// Assign
+		// ----
 
 		[Test]
 		public static void Assign_legacy() {
