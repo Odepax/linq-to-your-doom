@@ -11,7 +11,7 @@ namespace LinqToYourDoom.SourceGenerators.Utilities {
 
 			code.AppendLine(@"namespace LinqToYourDoom {"); {
 				code.AppendLine(@"public static partial class ObjectExtensions {"); {
-					GenerateToVariable(code, 8);
+					GenerateTee(code, 8);
 					GenerateTo(code, 8);
 					GenerateDo(code, 8);
 				}
@@ -20,7 +20,7 @@ namespace LinqToYourDoom.SourceGenerators.Utilities {
 			code.AppendLine(@"}");
 		}
 
-		static void GenerateToVariable(StringBuilder code, int N) {
+		static void GenerateTee(StringBuilder code, int N) {
 			var TYPES = "T1";
 			var PARAMS = "out T1 out1";
 			var ASSIGNS = "out1";
@@ -30,8 +30,8 @@ namespace LinqToYourDoom.SourceGenerators.Utilities {
 				PARAMS += ", out T" + i + " out" + i;
 				ASSIGNS += ", out" + i;
 
-				code.AppendLine($@"[MethodImpl(MethodImplOptions.AggressiveInlining)] public static ({ TYPES }) ToVariable<{ TYPES }>(this ({ TYPES }) @this, { PARAMS }) => ({ ASSIGNS }) = @this;");
-				code.AppendLine($@"[MethodImpl(MethodImplOptions.AggressiveInlining)] public static TIn ToVariable<TIn, { TYPES }>(this TIn @this, { PARAMS }, Func<TIn, ({ TYPES })> selector) {{ ({ ASSIGNS }) = selector.Invoke(@this); return @this; }}");
+				code.AppendLine($@"[MethodImpl(MethodImplOptions.AggressiveInlining)] public static ({ TYPES }) Tee<{ TYPES }>(this ({ TYPES }) @this, { PARAMS }) => ({ ASSIGNS }) = @this;");
+				code.AppendLine($@"[MethodImpl(MethodImplOptions.AggressiveInlining)] public static TIn Tee<TIn, { TYPES }>(this TIn @this, { PARAMS }, Func<TIn, ({ TYPES })> selector) {{ ({ ASSIGNS }) = selector.Invoke(@this); return @this; }}");
 			}
 		}
 

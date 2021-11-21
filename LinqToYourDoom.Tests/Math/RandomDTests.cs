@@ -13,7 +13,7 @@ namespace LinqToYourDoom.Tests.Math {
 			var tossedValues = new Dictionary<char, int>();
 
 			for (var i = 0; i < values.Count * N; ++i)
-				tossedValues[MathD.Random.In(values).ToVariable(out var value)] = tossedValues.GetValueOrDefault(value, 0) + 1;
+				tossedValues[MathD.Random.In(values).Tee(out var value)] = tossedValues.GetValueOrDefault(value, 0) + 1;
 
 			// Distribution is uniform.
 			foreach (var (value, count) in tossedValues)

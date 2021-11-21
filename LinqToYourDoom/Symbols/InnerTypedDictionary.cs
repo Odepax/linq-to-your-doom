@@ -139,7 +139,7 @@ namespace LinqToYourDoom {
 				return existingValue;
 
 			else {
-				Set(key, defaultValueFactory.Invoke().ToVariable(out var defaultValue));
+				Set(key, defaultValueFactory.Invoke().Tee(out var defaultValue));
 
 				return defaultValue;
 			}
@@ -150,7 +150,7 @@ namespace LinqToYourDoom {
 				return existingValue;
 
 			else {
-				Set(key, defaultValueFactory.Invoke(key).ToVariable(out var defaultValue));
+				Set(key, defaultValueFactory.Invoke(key).Tee(out var defaultValue));
 
 				return defaultValue;
 			}

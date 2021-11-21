@@ -78,7 +78,7 @@ namespace LinqToYourDoom {
 				   a.ImplementsGeneric(typeof(IDictionary<,>), out var iDictionary) // A is IDictionary
 				&& b.ImplementsGeneric(typeof(IEnumerable<>), out var iEnumerable) // B is IEnumerable
 				&& iEnumerable.GenericTypeArguments[0].GetGenericTypeDefinition() == typeof(KeyValuePair<,>) // B<0> is KeyValuePair
-				&& iEnumerable.GenericTypeArguments[0].GenericTypeArguments.ToVariable(out var kvp_generics)[0].Inherits(iDictionary.GenericTypeArguments[0]) // B<0><K> is A<K>
+				&& iEnumerable.GenericTypeArguments[0].GenericTypeArguments.Tee(out var kvp_generics)[0].Inherits(iDictionary.GenericTypeArguments[0]) // B<0><K> is A<K>
 			) {
 				key_type = iDictionary.GenericTypeArguments[0];
 				a_value = iDictionary.GenericTypeArguments[1];

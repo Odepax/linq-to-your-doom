@@ -502,7 +502,7 @@ namespace LinqToYourDoom.Tests.Linq.Extensions {
 			Enumerable
 				.Range(0, 3)
 				.Each(_ => ++invokeCount)
-				.ToVariable(out var enumerable);
+				.Tee(out var enumerable);
 
 			Assert.AreEqual(0, invokeCount);
 

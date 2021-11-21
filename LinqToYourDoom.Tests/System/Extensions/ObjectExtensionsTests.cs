@@ -48,7 +48,7 @@ namespace LinqToYourDoom.Tests.System.Extensions {
 		}
 
 		[Test]
-		public static void ToVariable() {
+		public static void Tee() {
 			var in1 = 1;
 			var in2 = (1, 2);
 			var in3 = (1, 2, 3);
@@ -61,29 +61,29 @@ namespace LinqToYourDoom.Tests.System.Extensions {
 			var out4 = 0;
 			var out5 = 0;
 
-			in1.ToVariable(out out1);
+			in1.Tee(out out1);
 
 			Assert.AreEqual(1, out1);
 
-			in2.ToVariable(out out1, out out2);
+			in2.Tee(out out1, out out2);
 
 			Assert.AreEqual(1, out1);
 			Assert.AreEqual(2, out2);
 
-			in3.ToVariable(out out1, out out2, out out3);
+			in3.Tee(out out1, out out2, out out3);
 
 			Assert.AreEqual(1, out1);
 			Assert.AreEqual(2, out2);
 			Assert.AreEqual(3, out3);
 
-			in4.ToVariable(out out1, out out2, out out3, out out4);
+			in4.Tee(out out1, out out2, out out3, out out4);
 
 			Assert.AreEqual(1, out1);
 			Assert.AreEqual(2, out2);
 			Assert.AreEqual(3, out3);
 			Assert.AreEqual(4, out4);
 
-			in5.ToVariable(out out1, out out2, out out3, out out4, out out5);
+			in5.Tee(out out1, out out2, out out3, out out4, out out5);
 
 			Assert.AreEqual(1, out1);
 			Assert.AreEqual(2, out2);
@@ -91,29 +91,29 @@ namespace LinqToYourDoom.Tests.System.Extensions {
 			Assert.AreEqual(4, out4);
 			Assert.AreEqual(5, out5);
 
-			in1.ToVariable(out out1, it => it * 10);
+			in1.Tee(out out1, it => it * 10);
 
 			Assert.AreEqual(10, out1);
 
-			in2.ToVariable(out out1, out out2, it => (it.Item1 * 10, it.Item2 * 2));
+			in2.Tee(out out1, out out2, it => (it.Item1 * 10, it.Item2 * 2));
 
 			Assert.AreEqual(10, out1);
 			Assert.AreEqual(4, out2);
 
-			in3.ToVariable(out out1, out out2, out out3, it => (it.Item1 * 10, it.Item2 * 2, it.Item3 * 3));
+			in3.Tee(out out1, out out2, out out3, it => (it.Item1 * 10, it.Item2 * 2, it.Item3 * 3));
 
 			Assert.AreEqual(10, out1);
 			Assert.AreEqual(4, out2);
 			Assert.AreEqual(9, out3);
 
-			in4.ToVariable(out out1, out out2, out out3, out out4, it => (it.Item1 * 10, it.Item2 * 2, it.Item3 * 3, it.Item4 * 4));
+			in4.Tee(out out1, out out2, out out3, out out4, it => (it.Item1 * 10, it.Item2 * 2, it.Item3 * 3, it.Item4 * 4));
 
 			Assert.AreEqual(10, out1);
 			Assert.AreEqual(4, out2);
 			Assert.AreEqual(9, out3);
 			Assert.AreEqual(16, out4);
 
-			in5.ToVariable(out out1, out out2, out out3, out out4, out out5, it => (it.Item1 * 10, it.Item2 * 2, it.Item3 * 3, it.Item4 * 4, it.Item5 * 5));
+			in5.Tee(out out1, out out2, out out3, out out4, out out5, it => (it.Item1 * 10, it.Item2 * 2, it.Item3 * 3, it.Item4 * 4, it.Item5 * 5));
 
 			Assert.AreEqual(10, out1);
 			Assert.AreEqual(4, out2);

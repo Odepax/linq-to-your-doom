@@ -174,7 +174,7 @@ any
          it.DoSomething();
    })
    .To(it => it.Children)
-   .ToVariable(out List<Other> children);
+   .Tee(out List<Other> children);
 ```
 
 There's also an underdeveloped `Lazy` counterpart:

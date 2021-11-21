@@ -27,7 +27,7 @@ namespace LinqToYourDoom {
 			@this
 				.GetInterfaces()
 				.FirstOrDefault(i => i.IsGenericType && i.GetGenericTypeDefinition() == other)
-				.ToVariable(out @interface)
+				.Tee(out @interface)
 				is not null;
 
 		/// <summary>

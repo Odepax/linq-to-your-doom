@@ -97,7 +97,7 @@ namespace LinqToYourDoom {
 				return existingValue;
 
 			else {
-				@this.Set(key, defaultValueFactory.Invoke().ToVariable(out var defaultValue));
+				@this.Set(key, defaultValueFactory.Invoke().Tee(out var defaultValue));
 
 				return defaultValue;
 			}
@@ -108,7 +108,7 @@ namespace LinqToYourDoom {
 				return existingValue;
 
 			else {
-				@this.Set(key, defaultValueFactory.Invoke(key).ToVariable(out var defaultValue));
+				@this.Set(key, defaultValueFactory.Invoke(key).Tee(out var defaultValue));
 
 				return defaultValue;
 			}

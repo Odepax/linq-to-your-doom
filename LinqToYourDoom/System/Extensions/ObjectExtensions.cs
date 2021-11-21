@@ -58,24 +58,24 @@ namespace LinqToYourDoom {
 			new(@this.Key, @this.Value);
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static T ToVariable<T>(this T @this, out T @out) => @out = @this;
+		public static T Tee<T>(this T @this, out T @out) => @out = @this;
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static TIn ToVariable<TIn, TOut>(this TIn @this, out TOut @out, Func<TIn, TOut> selector) {
+		public static TIn Tee<TIn, TOut>(this TIn @this, out TOut @out, Func<TIn, TOut> selector) {
 			@out = selector.Invoke(@this);
 
 			return @this;
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static KeyValuePair<TKey, TValue> ToVariable<TKey, TValue>(this KeyValuePair<TKey, TValue> @this, out TKey out1, out TValue out2) {
+		public static KeyValuePair<TKey, TValue> Tee<TKey, TValue>(this KeyValuePair<TKey, TValue> @this, out TKey out1, out TValue out2) {
 			(out1, out2) = @this;
-			
+
 			return @this;
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static TIn ToVariable<TIn, TKey, TValue>(this TIn @this, out TKey out1, out TValue out2, Func<TIn, KeyValuePair<TKey, TValue>> selector) {
+		public static TIn Tee<TIn, TKey, TValue>(this TIn @this, out TKey out1, out TValue out2, Func<TIn, KeyValuePair<TKey, TValue>> selector) {
 			(out1, out2) = selector.Invoke(@this);
 
 			return @this;
