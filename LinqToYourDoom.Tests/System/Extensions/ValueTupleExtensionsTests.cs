@@ -40,5 +40,8 @@ namespace LinqToYourDoom.Tests.System.Extensions {
 			Assert.AreEqual(("one", "two"), Two.ToTuple2(i => i.ToString(), ArgumentValidation.Lenient));
 			Assert.AreEqual(("one", "two"), Three.ToTuple2(i => i.ToString(), ArgumentValidation.Lenient));
 		}
+
+		[Test]
+		public static void Select() => Assert.AreEqual((3, 5, 7), (1, 2, 3).Select(x => 2 * x + 1));
 	}
 }

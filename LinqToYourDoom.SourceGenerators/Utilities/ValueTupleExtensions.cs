@@ -43,6 +43,7 @@ namespace LinqToYourDoom.SourceGenerators.Utilities {
 					code.AppendLine($@"}}");
 
 					GenerateToTuple(code, 8);
+					GenerateSelect(code, 8);
 				}
 				code.AppendLine(@"}");
 			}
@@ -168,5 +169,20 @@ namespace LinqToYourDoom.SourceGenerators.Utilities {
 				code.AppendLine($@"}}");
 			}
 		}
+
+		static void GenerateSelect(StringBuilder code, int N) {
+			var IN_TYPES = "TIn";
+			var OUT_TYPES = "TOut";
+			var ITEMS = "selector.Invoke(@this.Item1)";
+
+			for (var i = 2; i <= N; ++i) {
+				IN_TYPES += ", TIn";
+				OUT_TYPES += ", TOut";
+				ITEMS += ", selector.Invoke(@this.Item" + i + ')';
+
+				code.AppendLine($@"[MethodImpl(MethodImplOptions.AggressiveInlining)] public static ({ OUT_TYPES }) Select<TIn, TOut>(this ({ IN_TYPES }) @this, Func<TIn, TOut> selector) => ({ ITEMS });");
+			}
+		}
+
 	}
 }
