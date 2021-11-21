@@ -273,5 +273,170 @@ namespace LinqToYourDoom.Tests.Math.Extensions {
 			Assert.AreEqual(100.0, 10.0.Lerp(0, 100, 0, 1000));
 			Assert.AreEqual(110.0, 10.0.Lerp(0, 100, 100, 200));
 		}
+
+		[Test]
+		[TestCase(3.0, 0.5, 3.0)]
+		[TestCase(4.0, 0.5, 4.0)]
+		[TestCase(3.0, 1.0, 3.0)]
+		[TestCase(4.0, 1.0, 4.0)]
+
+		[TestCase(3.0, 12.0, 12.0)]
+		[TestCase(6.0, 12.0, 12.0)]
+		[TestCase(7.0, 12.0, 12.0)]
+		[TestCase(12.0, 12.0, 12.0)]
+		[TestCase(23.0, 12.0, 24.0)]
+		[TestCase(24.0, 12.0, 24.0)]
+
+		[TestCase(3.1415, 0.1, 3.2)]
+		[TestCase(3.1415, 0.01, 3.15)]
+		[TestCase(3.1415, 0.02, 3.16)]
+		[TestCase(3.1415, 0.5, 3.5)]
+		[TestCase(3.1415, 0.025, 3.150)]
+		[TestCase(3.1500, 0.025, 3.150)]
+		[TestCase(3.1505, 0.025, 3.175)]
+
+		[TestCase(-3.1415, 0.1, -3.1)]
+		[TestCase(-3.1415, 0.01, -3.14)]
+		[TestCase(-3.1415, 0.02, -3.14)]
+		[TestCase(-3.1415, 0.5, -3.0)]
+		[TestCase(-3.1415, 0.025, -3.125)]
+		[TestCase(-3.1465, 0.025, -3.125)]
+		[TestCase(-3.1250, 0.025, -3.125)]
+		[TestCase(-3.1505, 0.025, -3.150)]
+		public static void CeilingToMultiple(double value, double multiple, double expected) {
+			var actual = value.CeilingToMultiple(multiple);
+
+			Assert.AreEqual(expected, actual, 0.000_000_1);
+		}
+
+		[Test]
+		public static void CeilingToMultiple_zero_and_negatives() {
+			Assert.Throws<ArgumentOutOfRangeException>(() => 3.14.CeilingToMultiple(0.0, ArgumentValidation.Strict));
+			Assert.Throws<ArgumentOutOfRangeException>(() => 3.14.CeilingToMultiple(-0.3, ArgumentValidation.Strict));
+
+			Assert.AreEqual(double.NaN, 3.14.CeilingToMultiple(0.0, ArgumentValidation.Lenient));
+			Assert.AreEqual(3.0, 3.14.CeilingToMultiple(-0.3, ArgumentValidation.Lenient));
+		}
+
+		[Test]
+		[TestCase(3.1415, -0.1)]
+		[TestCase(3.1415, -0.01)]
+		[TestCase(3.1415, -0.02)]
+		[TestCase(3.1415, -0.5)]
+		[TestCase(3.1415, -0.025)]
+		[TestCase(3.1500, -0.025)]
+		[TestCase(3.1505, -0.025)]
+
+		[TestCase(-3.1415, -0.1)]
+		[TestCase(-3.1415, -0.01)]
+		[TestCase(-3.1415, -0.02)]
+		[TestCase(-3.1415, -0.5)]
+		[TestCase(-3.1415, -0.025)]
+		[TestCase(-3.1500, -0.025)]
+		[TestCase(-3.1505, -0.025)]
+		public static void Ceiling_to_negative_multiple_is_floor_absolute(double value, double multiple) {
+			Assert.AreEqual(value.CeilingToMultiple(multiple, ArgumentValidation.Lenient), value.FloorToMultiple(-multiple));
+			Assert.AreEqual(value.FloorToMultiple(multiple, ArgumentValidation.Lenient), value.CeilingToMultiple(-multiple));
+		}
+
+		[Test]
+		[TestCase(3.0, 0.5, 3.0)]
+		[TestCase(4.0, 0.5, 4.0)]
+		[TestCase(3.0, 1.0, 3.0)]
+		[TestCase(4.0, 1.0, 4.0)]
+
+		[TestCase(3.0, 12.0, 0.0)]
+		[TestCase(6.0, 12.0, 0.0)]
+		[TestCase(7.0, 12.0, 0.0)]
+		[TestCase(12.0, 12.0, 12.0)]
+		[TestCase(23.0, 12.0, 12.0)]
+		[TestCase(24.0, 12.0, 24.0)]
+		[TestCase(35.0, 12.0, 24.0)]
+
+		[TestCase(3.1415, 0.1, 3.1)]
+		[TestCase(3.1415, 0.01, 3.14)]
+		[TestCase(3.1415, 0.02, 3.14)]
+		[TestCase(3.1415, 0.5, 3.0)]
+		[TestCase(3.1415, 0.025, 3.125)]
+		[TestCase(3.1250, 0.025, 3.125)]
+		[TestCase(3.1505, 0.025, 3.150)]
+
+		[TestCase(-3.1415, 0.1, -3.2)]
+		[TestCase(-3.1415, 0.01, -3.15)]
+		[TestCase(-3.1415, 0.02, -3.16)]
+		[TestCase(-3.1415, 0.5, -3.5)]
+		[TestCase(-3.1415, 0.025, -3.150)]
+		[TestCase(-3.1500, 0.025, -3.150)]
+		[TestCase(-3.1505, 0.025, -3.175)]
+		public static void FloorToMultiple(double value, double multiple, double expected) {
+			var actual = value.FloorToMultiple(multiple);
+
+			Assert.AreEqual(expected, actual, 0.000_000_1);
+		}
+
+		[Test]
+		public static void FloorToMultiple_zero_and_negatives() {
+			Assert.Throws<ArgumentOutOfRangeException>(() => 3.14.FloorToMultiple(0.0, ArgumentValidation.Strict));
+			Assert.Throws<ArgumentOutOfRangeException>(() => 3.14.FloorToMultiple(-0.3, ArgumentValidation.Strict));
+
+			Assert.AreEqual(double.NaN, 3.14.FloorToMultiple(0.0, ArgumentValidation.Lenient));
+			Assert.AreEqual(3.3, 3.14.FloorToMultiple(-0.3, ArgumentValidation.Lenient));
+		}
+
+		[Test]
+		[TestCase(3.0, 0.5, 3.0)]
+		[TestCase(4.0, 0.5, 4.0)]
+		[TestCase(3.0, 1.0, 3.0)]
+		[TestCase(4.0, 1.0, 4.0)]
+		[TestCase(3.5, 0.5, 3.5)]
+
+		[TestCase(3.0, 12.0, 0.0)]
+		[TestCase(6.0, 12.0, 12.0)]
+		[TestCase(7.0, 12.0, 12.0)]
+		[TestCase(12.0, 12.0, 12.0)]
+		[TestCase(23.0, 12.0, 24.0)]
+		[TestCase(24.0, 12.0, 24.0)]
+		[TestCase(35.0, 12.0, 36.0)]
+
+		[TestCase(3.1415, 0.1, 3.1)]
+		[TestCase(3.1415, 0.01, 3.14)]
+		[TestCase(3.1415, 0.02, 3.14)]
+		[TestCase(3.1499, 0.02, 3.14)]
+		[TestCase(3.1500, 0.02, 3.16)]
+		[TestCase(3.1501, 0.02, 3.16)]
+		[TestCase(3.1415, 0.5, 3.0)]
+		[TestCase(3.1415, 0.025, 3.150)]
+		[TestCase(3.1500, 0.025, 3.150)]
+		[TestCase(3.1504, 0.025, 3.150)]
+		[TestCase(3.1505, 0.025, 3.150)]
+
+		[TestCase(-3.1415, 0.1, -3.1)]
+		[TestCase(-3.1415, 0.01, -3.14)]
+		[TestCase(-3.1415, 0.02, -3.14)]
+		[TestCase(-3.1499, 0.02, -3.14)]
+		[TestCase(-3.1500, 0.02, -3.16)]
+		[TestCase(-3.1501, 0.02, -3.16)]
+		[TestCase(-3.1415, 0.5, -3.0)]
+		[TestCase(-3.1415, 0.025, -3.150)]
+		[TestCase(-3.1500, 0.025, -3.150)]
+		[TestCase(-3.1504, 0.025, -3.150)]
+		[TestCase(-3.1505, 0.025, -3.150)]
+		public static void RoundToMultiple(double value, double multiple, double expected) {
+			var actual = value.RoundToMultiple(multiple);
+			var negative = value.RoundToMultiple(multiple, ArgumentValidation.Lenient);
+
+			Assert.AreEqual(expected, actual, 0.000_000_1);
+			Assert.AreEqual(expected, negative, 0.000_000_1);
+		}
+
+		[Test]
+		public static void RoundToMultiple_zero_and_negatives() {
+			Assert.Throws<ArgumentOutOfRangeException>(() => 3.14.RoundToMultiple(0.0, ArgumentValidation.Strict));
+			Assert.Throws<ArgumentOutOfRangeException>(() => 3.14.RoundToMultiple(-0.3, ArgumentValidation.Strict));
+
+			Assert.AreEqual(double.NaN, 3.14.RoundToMultiple(0.0, ArgumentValidation.Lenient));
+			Assert.AreEqual(4.7, 4.65.RoundToMultiple(0.1, ArgumentValidation.Lenient));
+			Assert.AreEqual(4.7, 4.65.RoundToMultiple(-0.1, ArgumentValidation.Lenient)); // Numbers modified to work around shitty precision...
+		}
 	}
 }

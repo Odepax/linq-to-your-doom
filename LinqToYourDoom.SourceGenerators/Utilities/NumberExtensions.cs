@@ -312,6 +312,48 @@ namespace LinqToYourDoom.SourceGenerators.Utilities {
 				code.AppendLine($@"/// <summary> <see cref=""DeclineRatio({ TYPE }, { TYPE }, { TYPE }, ArgumentValidation)""/> without bounds validation. </summary>");
 				code.AppendLine($@"[MethodImpl(MethodImplOptions.AggressiveInlining)]");
 				code.AppendLine($@"public static { TYPE } UncheckedDeclineRatio(this { TYPE } @this, { TYPE } lower, { TYPE } upper) => (upper - @this) / (upper - lower);");
+
+				code.AppendLine($@"/// <param name=""argumentValidation"">");
+				code.AppendLine($@"/// When <paramref name=""multiple""/> is <c>0</c> and <paramref name=""argumentValidation""/> is <see cref=""ArgumentValidation.Lenient""/>,");
+				code.AppendLine($@"/// <see cref=""{ TYPE }.NaN""/> will be returned;");
+				code.AppendLine($@"/// when <paramref name=""multiple""/> is negative, the result is effectively the same as <see cref=""FloorToMultiple({ TYPE }, { TYPE }, ArgumentValidation)""/>;");
+				code.AppendLine($@"/// otherwise, an <see cref=""ArgumentOutOfRangeException""/> will be thrown.");
+				code.AppendLine($@"/// </param>");
+				code.AppendLine($@"public static { TYPE } CeilingToMultiple(this { TYPE } @this, { TYPE } multiple, ArgumentValidation argumentValidation = default) {{"); {
+					code.AppendLine($@"if (multiple <= 0 && argumentValidation == ArgumentValidation.Strict)");
+					code.AppendLine($@"throw new ArgumentOutOfRangeException(nameof(multiple), ""Cannot ceil to the nearest multiple of zero or negative."");");
+
+					code.AppendLine($@"return Math{ SUFFIX }.Ceiling(@this / multiple) * multiple;");
+				}
+				code.AppendLine($@"}}");
+
+				code.AppendLine($@"/// <param name=""argumentValidation"">");
+				code.AppendLine($@"/// When <paramref name=""multiple""/> is <c>0</c> and <paramref name=""argumentValidation""/> is <see cref=""ArgumentValidation.Lenient""/>,");
+				code.AppendLine($@"/// <see cref=""{ TYPE }.NaN""/> will be returned;");
+				code.AppendLine($@"/// when <paramref name=""multiple""/> is negative, the result is effectively the same as <see cref=""CeilingToMultiple({ TYPE }, { TYPE }, ArgumentValidation)""/>;");
+				code.AppendLine($@"/// otherwise, an <see cref=""ArgumentOutOfRangeException""/> will be thrown.");
+				code.AppendLine($@"/// </param>");
+				code.AppendLine($@"public static { TYPE } FloorToMultiple(this { TYPE } @this, { TYPE } multiple, ArgumentValidation argumentValidation = default) {{"); {
+					code.AppendLine($@"if (multiple <= 0 && argumentValidation == ArgumentValidation.Strict)");
+					code.AppendLine($@"throw new ArgumentOutOfRangeException(nameof(multiple), ""Cannot floor to the nearest multiple of zero or negative."");");
+
+					code.AppendLine($@"return Math{ SUFFIX }.Floor(@this / multiple) * multiple;");
+				}
+				code.AppendLine($@"}}");
+
+				code.AppendLine($@"/// <param name=""argumentValidation"">");
+				code.AppendLine($@"/// When <paramref name=""multiple""/> is <c>0</c> and <paramref name=""argumentValidation""/> is <see cref=""ArgumentValidation.Lenient""/>,");
+				code.AppendLine($@"/// <see cref=""{ TYPE }.NaN""/> will be returned;");
+				code.AppendLine($@"/// when <paramref name=""multiple""/> is negative, the result is effectively the same as when it's positive;");
+				code.AppendLine($@"/// otherwise, an <see cref=""ArgumentOutOfRangeException""/> will be thrown.");
+				code.AppendLine($@"/// </param>");
+				code.AppendLine($@"public static { TYPE } RoundToMultiple(this { TYPE } @this, { TYPE } multiple, ArgumentValidation argumentValidation = default) {{"); {
+					code.AppendLine($@"if (multiple <= 0 && argumentValidation == ArgumentValidation.Strict)");
+					code.AppendLine($@"throw new ArgumentOutOfRangeException(nameof(multiple), ""Cannot round to the nearest multiple of zero or negative."");");
+
+					code.AppendLine($@"return Math{ SUFFIX }.Round(@this / multiple, MidpointRounding.AwayFromZero) * multiple;");
+				}
+				code.AppendLine($@"}}");
 			}
 		}
 	}
