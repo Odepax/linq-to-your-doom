@@ -2,7 +2,8 @@ using System;
 using System.Collections.Generic;
 
 namespace LinqToYourDoom {
-	public static class EqualityComparer {
+	/// <summary> <i>D</i> stands for <i>Doom</i>, of course... </summary>
+	public static class EqualityComparerD {
 		/// <summary>
 		/// Returns an equality comparer that uses the given <paramref name="equals"/> delegate
 		/// and <see cref="object.GetHashCode"/>.
