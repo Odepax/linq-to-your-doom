@@ -12,6 +12,14 @@ namespace LinqToYourDoom {
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static bool IsUpper(this char @this) => char.IsUpper(@this);
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static bool IsWhiteSpace(this char @this) => char.IsWhiteSpace(@this);
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static bool IsNotControl(this char @this) => !char.IsControl(@this);
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static bool IsNotDigit(this char @this) => !char.IsDigit(@this);
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static bool IsNotLetter(this char @this) => !char.IsLetter(@this);
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static bool IsNotLetterNorDigit(this char @this) => !char.IsLetterOrDigit(@this);
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static bool IsNotLower(this char @this) => !char.IsLower(@this);
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static bool IsNotUpper(this char @this) => !char.IsUpper(@this);
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static bool IsNotWhiteSpace(this char @this) => !char.IsWhiteSpace(@this);
+
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static char ToLower(this char @this) => char.ToLower(@this);
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static char ToLower(this char @this, CultureInfo culture) => char.ToLower(@this, culture);
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static char ToLowerInvariant(this char @this) => char.ToLowerInvariant(@this);
