@@ -17,7 +17,7 @@ jobs:
     - name: "Setup .NET"
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 5.0.x
+        dotnet-version: 6.0.x
 
     - name: "Publish NuGet"
       run: 'dotnet test --configuration "Release" && dotnet pack --configuration "Release" --no-build --output "./bin/NuGet" && dotnet nuget push "./bin/NuGet/*.nupkg" --source "https://api.nuget.org/v3/index.json" --api-key "${{ secrets.GH_NUGET_KEY_LTYD }}"'
