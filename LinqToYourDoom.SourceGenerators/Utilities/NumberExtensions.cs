@@ -20,17 +20,17 @@ namespace LinqToYourDoom.SourceGenerators.Utilities {
 
 		static void GenerateDivRem(StringBuilder code) {
 			var Data = new[] {
-				("sbyte", "(sbyte) "),
-				("byte", "(byte) "),
-				("short", "(short) "),
-				("ushort", "(ushort) "),
-				("int", ""),
-				("uint", ""),
-				("long", ""),
-				("ulong", "")
+				"sbyte",
+				"byte",
+				"short",
+				"ushort",
+				"int",
+				"uint",
+				"long",
+				"ulong"
 			};
 
-			foreach (var (TYPE, CAST) in Data) {
+			foreach (var TYPE in Data) {
 				code.AppendLine($@"/// <param name=""argumentValidation"">");
 				code.AppendLine($@"/// When <paramref name=""divisor""/> is <c>0</c> and <paramref name=""argumentValidation""/> is <see cref=""ArgumentValidation.Lenient""/>,");
 				code.AppendLine($@"/// <paramref name=""divisor""/> will be silently considered as <c>1</c>,");
@@ -40,10 +40,7 @@ namespace LinqToYourDoom.SourceGenerators.Utilities {
 					code.AppendLine($@"if (divisor == 0 && argumentValidation == ArgumentValidation.Lenient)");
 					code.AppendLine($@"return (@this, 0);");
 
-					code.AppendLine($@"var q = @this / divisor;");
-					code.AppendLine($@"var r = @this - q * divisor;");
-
-					code.AppendLine($@"return ({ CAST }q, { CAST }r);");
+					code.AppendLine($@"else return Math.DivRem(@this, divisor);");
 				}
 				code.AppendLine($@"}}");
 			}
@@ -247,6 +244,7 @@ namespace LinqToYourDoom.SourceGenerators.Utilities {
 				code.AppendLine($@"[MethodImpl(MethodImplOptions.AggressiveInlining)] public static { TYPE } Log10(this { TYPE } @this) => Math{ SUFFIX }.Log10(@this);");
 				code.AppendLine($@"[MethodImpl(MethodImplOptions.AggressiveInlining)] public static { TYPE } Log(this { TYPE } @this, { TYPE } newBase) => Math{ SUFFIX }.Log(@this, newBase);");
 
+				code.AppendLine($@"[MethodImpl(MethodImplOptions.AggressiveInlining)] public static ({ TYPE } Sin, { TYPE } Cos) SinCos(this { TYPE } @this) => Math{ SUFFIX }.SinCos(@this);");
 				code.AppendLine($@"[MethodImpl(MethodImplOptions.AggressiveInlining)] public static { TYPE } Cos(this { TYPE } @this) => Math{ SUFFIX }.Cos(@this);");
 				code.AppendLine($@"[MethodImpl(MethodImplOptions.AggressiveInlining)] public static { TYPE } Sin(this { TYPE } @this) => Math{ SUFFIX }.Sin(@this);");
 				code.AppendLine($@"[MethodImpl(MethodImplOptions.AggressiveInlining)] public static { TYPE } Tan(this { TYPE } @this) => Math{ SUFFIX }.Tan(@this);");
