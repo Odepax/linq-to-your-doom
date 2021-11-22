@@ -121,10 +121,6 @@ enumerableOfString.WhereNotNullNorWhiteSpace();
 enumerable.Order();
 enumerable.OrderDescending();
 
-enumerable.DistinctBy(it => it.DiscriminativeValue);
-enumerable.UnionBy(otherEnumerable, it => it.DiscriminativeValue);
-enumerable.IntersectBy(otherEnumerable, it => it.DiscriminativeValue);
-
 enumerable.HasDuplicates();
 enumerable.HasDuplicatesBy(it => it.UniqueValue);
 

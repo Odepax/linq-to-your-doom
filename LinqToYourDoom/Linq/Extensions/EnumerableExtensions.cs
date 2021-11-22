@@ -106,26 +106,6 @@ namespace LinqToYourDoom {
 			else return it;
 		});
 
-		public static IEnumerable<T> DistinctBy<T, TCompared>(this IEnumerable<T> @this, Func<T, TCompared> selector, IEqualityComparer<TCompared>? comparer = default) {
-			var set = new HashSet<TCompared>(comparer);
-
-			foreach (var item in @this)
-				if (set.Add(selector.Invoke(item)))
-					yield return item;
-		}
-
-		public static IEnumerable<T> UnionBy<T, TCompared>(this IEnumerable<T> @this, IEnumerable<T> other, Func<T, TCompared> selector, IEqualityComparer<TCompared>? comparer = default) {
-			var set = new HashSet<TCompared>(comparer);
-
-			foreach (var item in @this)
-				if (set.Add(selector.Invoke(item)))
-					yield return item;
-
-			foreach (var item in other)
-				if (set.Add(selector.Invoke(item)))
-					yield return item;
-		}
-
 		public static IEnumerable<T> IntersectBy<T, TCompared>(this IEnumerable<T> @this, IEnumerable<T> other, Func<T, TCompared> selector, IEqualityComparer<TCompared>? comparer = default) {
 			var set = new HashSet<TCompared>(comparer);
 
