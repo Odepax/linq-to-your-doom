@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFramework>net5.0</TargetFramework>
+		<TargetFramework>net6.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<NoWarn>$(NoWarn);1591;1573;0419</NoWarn>
@@ -10,7 +10,7 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<Version>0.3.0</Version>
+		<Version>0.4.0</Version>
 		<Authors>Odepax</Authors>
 		<Description>Extension methods... Because...</Description>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>

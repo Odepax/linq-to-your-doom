@@ -352,7 +352,7 @@ namespace LinqToYourDoom {
 		}
 
 		[return: NotNullIfNotNull("defaultValue")]
-		public static T? MinBy<T, TCompared>(this IEnumerable<T> @this, Func<T, TCompared> selector, T? defaultValue = default, IComparer<TCompared>? comparer = default) {
+		public static T? MinBy<T, TCompared>(this IEnumerable<T> @this, Func<T, TCompared> selector, T? defaultValue, IComparer<TCompared>? comparer = default) {
 			using var enumerator = @this.GetEnumerator();
 
 			if (enumerator.MoveNext()) {
@@ -377,7 +377,7 @@ namespace LinqToYourDoom {
 		}
 
 		[return: NotNullIfNotNull("defaultValue")]
-		public static T? MaxBy<T, TCompared>(this IEnumerable<T> @this, Func<T, TCompared> selector, T? defaultValue = default, IComparer<TCompared>? comparer = default) {
+		public static T? MaxBy<T, TCompared>(this IEnumerable<T> @this, Func<T, TCompared> selector, T? defaultValue, IComparer<TCompared>? comparer = default) {
 			using var enumerator = @this.GetEnumerator();
 
 			if (enumerator.MoveNext()) {

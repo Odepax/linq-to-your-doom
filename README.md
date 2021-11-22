@@ -134,8 +134,8 @@ enumerable.TakeAtLeast(42);
 enumerable.AddRangeTo(destinationCollection);
 enumerable.RemoveRangeFrom(destinationCollection);
 
-enumerable.MinBy(it => it.ComparableValue);
-enumerable.MaxBy(it => it.ComparableValue);
+enumerable.MinBy(it => it.ComparableValue, defaultValueIfEmpty);
+enumerable.MaxBy(it => it.ComparableValue, defaultValueIfEmpty);
 
 enumerable.Recurse(it => it.Parent); // T => IEnumerable<T>
 enumerable.RecurseMany(it => it.Children); // T => IEnumerable<T>
