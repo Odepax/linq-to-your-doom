@@ -5,12 +5,11 @@ namespace LinqToYourDoom.SourceGenerators.Utilities {
 		public static void Generate(StringBuilder code) {
 			code.AppendLine(@"using System;");
 
-			code.AppendLine(@"namespace LinqToYourDoom {"); {
-				code.AppendLine(@"public partial interface IRandomD {"); {
-					GenerateBetween(code);
-					GenerateSign_Bool_Angle(code);
-				}
-				code.AppendLine(@"}");
+			code.AppendLine(@"namespace LinqToYourDoom;");
+
+			code.AppendLine(@"public partial interface IRandomD {"); {
+				GenerateBetween(code);
+				GenerateSign_Bool_Angle(code);
 			}
 			code.AppendLine(@"}");
 		}

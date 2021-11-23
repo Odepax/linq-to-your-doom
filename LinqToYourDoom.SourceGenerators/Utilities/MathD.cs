@@ -6,13 +6,12 @@ namespace LinqToYourDoom.SourceGenerators.Utilities {
 			code.AppendLine(@"using System;");
 			code.AppendLine(@"using System.Runtime.CompilerServices;");
 
-			code.AppendLine(@"namespace LinqToYourDoom {"); {
-				code.AppendLine(@"public static partial class MathD {"); {
-					GenerateAvg(code);
-					GenerateAbsMin(code);
-					GenerateAbsMax(code);
-				}
-				code.AppendLine(@"}");
+			code.AppendLine(@"namespace LinqToYourDoom;");
+
+			code.AppendLine(@"public static partial class MathD {"); {
+				GenerateAvg(code);
+				GenerateAbsMin(code);
+				GenerateAbsMax(code);
 			}
 			code.AppendLine(@"}");
 		}

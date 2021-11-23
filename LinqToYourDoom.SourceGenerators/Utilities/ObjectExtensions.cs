@@ -9,13 +9,12 @@ namespace LinqToYourDoom.SourceGenerators.Utilities {
 			code.AppendLine(@"using System.Linq;");
 			code.AppendLine(@"using System.Runtime.CompilerServices;");
 
-			code.AppendLine(@"namespace LinqToYourDoom {"); {
-				code.AppendLine(@"public static partial class ObjectExtensions {"); {
-					GenerateTee(code, 8);
-					GenerateTo(code, 8);
-					GenerateDo(code, 8);
-				}
-				code.AppendLine(@"}");
+			code.AppendLine(@"namespace LinqToYourDoom;");
+
+			code.AppendLine(@"public static partial class ObjectExtensions {"); {
+				GenerateTee(code, 8);
+				GenerateTo(code, 8);
+				GenerateDo(code, 8);
 			}
 			code.AppendLine(@"}");
 		}

@@ -8,44 +8,43 @@ namespace LinqToYourDoom.SourceGenerators.Utilities {
 			code.AppendLine(@"using System.Collections.Generic;");
 			code.AppendLine(@"using System.Runtime.CompilerServices;");
 
-			code.AppendLine(@"namespace LinqToYourDoom {"); {
-				code.AppendLine(@"public static partial class ValueTupleExtensions {"); {
-					GenerateTo_(code, 8);
+			code.AppendLine(@"namespace LinqToYourDoom;");
 
-					code.AppendLine($@"[MethodImpl(MethodImplOptions.AggressiveInlining)]");
-					code.AppendLine($@"static InvalidOperationException NotEnoughItems() => new(""The sequence doesn't contain enough items."");");
+			code.AppendLine(@"public static partial class ValueTupleExtensions {"); {
+				GenerateTo_(code, 8);
 
-					code.AppendLine($@"[MethodImpl(MethodImplOptions.AggressiveInlining)]");
-					code.AppendLine($@"static InvalidOperationException TooManyItems() => new(""The sequence contains too many items."");");
+				code.AppendLine($@"[MethodImpl(MethodImplOptions.AggressiveInlining)]");
+				code.AppendLine($@"static InvalidOperationException NotEnoughItems() => new(""The sequence doesn't contain enough items."");");
 
-					code.AppendLine($@"[MethodImpl(MethodImplOptions.AggressiveInlining)]");
-					code.AppendLine($@"static T CheckForMoreItems<T>(this T @return, IEnumerator enumerator, ArgumentValidation argumentValidation) {{"); {
-						code.AppendLine($@"if (argumentValidation == ArgumentValidation.Strict && enumerator.MoveNext())");
-						code.AppendLine($@"throw TooManyItems();");
-						code.AppendLine($@"else return @return;");
-					}
-					code.AppendLine($@"}}");
+				code.AppendLine($@"[MethodImpl(MethodImplOptions.AggressiveInlining)]");
+				code.AppendLine($@"static InvalidOperationException TooManyItems() => new(""The sequence contains too many items."");");
 
-					code.AppendLine($@"[MethodImpl(MethodImplOptions.AggressiveInlining)]");
-					code.AppendLine($@"static T NewFrom<T>(Action<T> action) where T : new() {{"); {
-						code.AppendLine($@"var @new = new T();");
-						code.AppendLine($@"action.Invoke(@new);");
-						code.AppendLine($@"return @new;");
-					}
-					code.AppendLine($@"}}");
-
-					code.AppendLine($@"[MethodImpl(MethodImplOptions.AggressiveInlining)]");
-					code.AppendLine($@"static T NewFrom<T>(Action<T, int> action, int i) where T : new() {{"); {
-						code.AppendLine($@"var @new = new T();");
-						code.AppendLine($@"action.Invoke(@new, i);");
-						code.AppendLine($@"return @new;");
-					}
-					code.AppendLine($@"}}");
-
-					GenerateToTuple(code, 8);
-					GenerateSelect(code, 8);
+				code.AppendLine($@"[MethodImpl(MethodImplOptions.AggressiveInlining)]");
+				code.AppendLine($@"static T CheckForMoreItems<T>(this T @return, IEnumerator enumerator, ArgumentValidation argumentValidation) {{"); {
+					code.AppendLine($@"if (argumentValidation == ArgumentValidation.Strict && enumerator.MoveNext())");
+					code.AppendLine($@"throw TooManyItems();");
+					code.AppendLine($@"else return @return;");
 				}
-				code.AppendLine(@"}");
+				code.AppendLine($@"}}");
+
+				code.AppendLine($@"[MethodImpl(MethodImplOptions.AggressiveInlining)]");
+				code.AppendLine($@"static T NewFrom<T>(Action<T> action) where T : new() {{"); {
+					code.AppendLine($@"var @new = new T();");
+					code.AppendLine($@"action.Invoke(@new);");
+					code.AppendLine($@"return @new;");
+				}
+				code.AppendLine($@"}}");
+
+				code.AppendLine($@"[MethodImpl(MethodImplOptions.AggressiveInlining)]");
+				code.AppendLine($@"static T NewFrom<T>(Action<T, int> action, int i) where T : new() {{"); {
+					code.AppendLine($@"var @new = new T();");
+					code.AppendLine($@"action.Invoke(@new, i);");
+					code.AppendLine($@"return @new;");
+				}
+				code.AppendLine($@"}}");
+
+				GenerateToTuple(code, 8);
+				GenerateSelect(code, 8);
 			}
 			code.AppendLine(@"}");
 		}

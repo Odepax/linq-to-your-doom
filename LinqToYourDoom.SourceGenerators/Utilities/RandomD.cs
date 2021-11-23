@@ -6,13 +6,12 @@ namespace LinqToYourDoom.SourceGenerators.Utilities {
 			code.AppendLine(@"using System;");
 			code.AppendLine(@"using System.Runtime.CompilerServices;");
 
-			code.AppendLine(@"namespace LinqToYourDoom {"); {
-				code.AppendLine(@"public sealed partial class RandomD {"); {
-					GenerateBetween(code);
-					GenerateUncheckedBetween(code);
-					GenerateSign_Bool(code);
-				}
-				code.AppendLine(@"}");
+			code.AppendLine(@"namespace LinqToYourDoom;");
+
+			code.AppendLine(@"public sealed partial class RandomD {"); {
+				GenerateBetween(code);
+				GenerateUncheckedBetween(code);
+				GenerateSign_Bool(code);
 			}
 			code.AppendLine(@"}");
 		}

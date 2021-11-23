@@ -1,149 +1,149 @@
 using System.Collections.Generic;
 using NUnit.Framework;
 
-namespace LinqToYourDoom.Tests.System.Extensions {
-	static class ObjectExtensionsTests {
-		[Test]
-		public static void Local_functions_learning_test_1() {
-			var K = 1;
+namespace LinqToYourDoom.Tests.System.Extensions;
 
+static class ObjectExtensionsTests {
+	[Test]
+	public static void Local_functions_learning_test_1() {
+		var K = 1;
+
+		Assert.AreEqual(1, K);
+		{
 			Assert.AreEqual(1, K);
-			{
-				Assert.AreEqual(1, K);
-				K = 2;
-				Assert.AreEqual(2, K);
-			}
+			K = 2;
 			Assert.AreEqual(2, K);
 		}
+		Assert.AreEqual(2, K);
+	}
 
-		[Test]
-		public static void Local_functions_learning_test_2() {
-			var K = 1;
+	[Test]
+	public static void Local_functions_learning_test_2() {
+		var K = 1;
 
+		Assert.AreEqual(1, f());
+		{
 			Assert.AreEqual(1, f());
-			{
-				Assert.AreEqual(1, f());
-				K = 2;
-				Assert.AreEqual(2, f());
-			}
+			K = 2;
 			Assert.AreEqual(2, f());
+		}
+		Assert.AreEqual(2, f());
 
-			int f() => K;
+		int f() => K;
+	}
+
+	[Test]
+	public static void Local_functions_learning_test_3() {
+		var values = new int[3];
+		var K = 1;
+
+		for (var i = 0; i < 3; ++i) {
+			K *= 10;
+
+			values[i] = f();
 		}
 
-		[Test]
-		public static void Local_functions_learning_test_3() {
-			var values = new int[3];
-			var K = 1;
+		Assert.AreEqual(new[] { 10, 100, 1000 }, values);
 
-			for (var i = 0; i < 3; ++i) {
-				K *= 10;
+		int f() => K;
+	}
 
-				values[i] = f();
-			}
+	[Test]
+	public static void Tee() {
+		var in1 = 1;
+		var in2 = (1, 2);
+		var in3 = (1, 2, 3);
+		var in4 = (1, 2, 3, 4);
+		var in5 = (1, 2, 3, 4, 5);
 
-			Assert.AreEqual(new[] { 10, 100, 1000 }, values);
+		var out1 = 0;
+		var out2 = 0;
+		var out3 = 0;
+		var out4 = 0;
+		var out5 = 0;
 
-			int f() => K;
-		}
+		in1.Tee(out out1);
 
-		[Test]
-		public static void Tee() {
-			var in1 = 1;
-			var in2 = (1, 2);
-			var in3 = (1, 2, 3);
-			var in4 = (1, 2, 3, 4);
-			var in5 = (1, 2, 3, 4, 5);
+		Assert.AreEqual(1, out1);
 
-			var out1 = 0;
-			var out2 = 0;
-			var out3 = 0;
-			var out4 = 0;
-			var out5 = 0;
+		in2.Tee(out out1, out out2);
 
-			in1.Tee(out out1);
+		Assert.AreEqual(1, out1);
+		Assert.AreEqual(2, out2);
 
-			Assert.AreEqual(1, out1);
+		in3.Tee(out out1, out out2, out out3);
 
-			in2.Tee(out out1, out out2);
+		Assert.AreEqual(1, out1);
+		Assert.AreEqual(2, out2);
+		Assert.AreEqual(3, out3);
 
-			Assert.AreEqual(1, out1);
-			Assert.AreEqual(2, out2);
+		in4.Tee(out out1, out out2, out out3, out out4);
 
-			in3.Tee(out out1, out out2, out out3);
+		Assert.AreEqual(1, out1);
+		Assert.AreEqual(2, out2);
+		Assert.AreEqual(3, out3);
+		Assert.AreEqual(4, out4);
 
-			Assert.AreEqual(1, out1);
-			Assert.AreEqual(2, out2);
-			Assert.AreEqual(3, out3);
+		in5.Tee(out out1, out out2, out out3, out out4, out out5);
 
-			in4.Tee(out out1, out out2, out out3, out out4);
+		Assert.AreEqual(1, out1);
+		Assert.AreEqual(2, out2);
+		Assert.AreEqual(3, out3);
+		Assert.AreEqual(4, out4);
+		Assert.AreEqual(5, out5);
 
-			Assert.AreEqual(1, out1);
-			Assert.AreEqual(2, out2);
-			Assert.AreEqual(3, out3);
-			Assert.AreEqual(4, out4);
+		in1.Tee(out out1, it => it * 10);
 
-			in5.Tee(out out1, out out2, out out3, out out4, out out5);
+		Assert.AreEqual(10, out1);
 
-			Assert.AreEqual(1, out1);
-			Assert.AreEqual(2, out2);
-			Assert.AreEqual(3, out3);
-			Assert.AreEqual(4, out4);
-			Assert.AreEqual(5, out5);
+		in2.Tee(out out1, out out2, it => (it.Item1 * 10, it.Item2 * 2));
 
-			in1.Tee(out out1, it => it * 10);
+		Assert.AreEqual(10, out1);
+		Assert.AreEqual(4, out2);
 
-			Assert.AreEqual(10, out1);
+		in3.Tee(out out1, out out2, out out3, it => (it.Item1 * 10, it.Item2 * 2, it.Item3 * 3));
 
-			in2.Tee(out out1, out out2, it => (it.Item1 * 10, it.Item2 * 2));
+		Assert.AreEqual(10, out1);
+		Assert.AreEqual(4, out2);
+		Assert.AreEqual(9, out3);
 
-			Assert.AreEqual(10, out1);
-			Assert.AreEqual(4, out2);
+		in4.Tee(out out1, out out2, out out3, out out4, it => (it.Item1 * 10, it.Item2 * 2, it.Item3 * 3, it.Item4 * 4));
 
-			in3.Tee(out out1, out out2, out out3, it => (it.Item1 * 10, it.Item2 * 2, it.Item3 * 3));
+		Assert.AreEqual(10, out1);
+		Assert.AreEqual(4, out2);
+		Assert.AreEqual(9, out3);
+		Assert.AreEqual(16, out4);
 
-			Assert.AreEqual(10, out1);
-			Assert.AreEqual(4, out2);
-			Assert.AreEqual(9, out3);
+		in5.Tee(out out1, out out2, out out3, out out4, out out5, it => (it.Item1 * 10, it.Item2 * 2, it.Item3 * 3, it.Item4 * 4, it.Item5 * 5));
 
-			in4.Tee(out out1, out out2, out out3, out out4, it => (it.Item1 * 10, it.Item2 * 2, it.Item3 * 3, it.Item4 * 4));
+		Assert.AreEqual(10, out1);
+		Assert.AreEqual(4, out2);
+		Assert.AreEqual(9, out3);
+		Assert.AreEqual(16, out4);
+		Assert.AreEqual(25, out5);
+	}
 
-			Assert.AreEqual(10, out1);
-			Assert.AreEqual(4, out2);
-			Assert.AreEqual(9, out3);
-			Assert.AreEqual(16, out4);
+	[Test]
+	public static void To() {
+		Assert.AreEqual((true, 1, 20), ("A", 2, false).To((a, b, c) => (!c, a.Length, b * 10)));
+		Assert.AreEqual("P314", KeyValuePair.Create("PI", 3.14).To((k, v) => k[0..1] + v * 100));
+	}
 
-			in5.Tee(out out1, out out2, out out3, out out4, out out5, it => (it.Item1 * 10, it.Item2 * 2, it.Item3 * 3, it.Item4 * 4, it.Item5 * 5));
+	[Test]
+	public static void Into() {
+		(bool, int, int) x = default;
+		string y = null!;
 
-			Assert.AreEqual(10, out1);
-			Assert.AreEqual(4, out2);
-			Assert.AreEqual(9, out3);
-			Assert.AreEqual(16, out4);
-			Assert.AreEqual(25, out5);
-		}
+		("ABC", 1, true).Into((a, b, c) => { x = (!c, a.Length, b * 10); });
+		Assert.AreEqual((false, 3, 10), x);
 
-		[Test]
-		public static void To() {
-			Assert.AreEqual((true, 1, 20), ("A", 2, false).To((a, b, c) => (!c, a.Length, b * 10)));
-			Assert.AreEqual("P314", KeyValuePair.Create("PI", 3.14).To((k, v) => k[0..1] + v * 100));
-		}
+		KeyValuePair.Create("K", 42).Into((k, v) => { y = k[0..1] + v * 100; });
+		Assert.AreEqual("K4200", y);
 
-		[Test]
-		public static void Into() {
-			(bool, int, int) x = default;
-			string y = null!;
+		("A", 2, false).Into((a, b, c) => x = (!c, a.Length, b * 10));
+		Assert.AreEqual((true, 1, 20), x);
 
-			("ABC", 1, true).Into((a, b, c) => { x = (!c, a.Length, b * 10); });
-			Assert.AreEqual((false, 3, 10), x);
-
-			KeyValuePair.Create("K", 42).Into((k, v) => { y = k[0..1] + v * 100; });
-			Assert.AreEqual("K4200", y);
-
-			("A", 2, false).Into((a, b, c) => x = (!c, a.Length, b * 10));
-			Assert.AreEqual((true, 1, 20), x);
-
-			KeyValuePair.Create("PI", 3.14).Into((k, v) => y = k[0..1] + v * 100);
-			Assert.AreEqual("P314", y);
-		}
+		KeyValuePair.Create("PI", 3.14).Into((k, v) => y = k[0..1] + v * 100);
+		Assert.AreEqual("P314", y);
 	}
 }

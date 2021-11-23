@@ -1,47 +1,47 @@
 using System;
 using NUnit.Framework;
 
-namespace LinqToYourDoom.Tests.System.Extensions {
-	static class ValueTupleExtensionsTests {
-		static readonly string[] Empty = Array.Empty<string>();
-		static readonly string[] One = new[] { "one" };
-		static readonly string[] Two = new[] { "one", "two" };
-		static readonly string[] Three = new[] { "one", "two", "three" };
+namespace LinqToYourDoom.Tests.System.Extensions;
 
-		[Test]
-		public static void ToTuple() {
-			Assert.Throws<InvalidOperationException>(() => Empty.ToTuple2(ArgumentValidation.Strict));
-			Assert.Throws<InvalidOperationException>(() => One.ToTuple2(ArgumentValidation.Strict));
-			Assert.AreEqual(("one", "two"), Two.ToTuple2(ArgumentValidation.Strict));
-			Assert.Throws<InvalidOperationException>(() => Three.ToTuple2(ArgumentValidation.Strict));
+static class ValueTupleExtensionsTests {
+	static readonly string[] Empty = Array.Empty<string>();
+	static readonly string[] One = new[] { "one" };
+	static readonly string[] Two = new[] { "one", "two" };
+	static readonly string[] Three = new[] { "one", "two", "three" };
 
-			Assert.Throws<InvalidOperationException>(() => Empty.ToTuple2(ArgumentValidation.Lenient));
-			Assert.Throws<InvalidOperationException>(() => One.ToTuple2(ArgumentValidation.Lenient));
-			Assert.AreEqual(("one", "two"), Two.ToTuple2(ArgumentValidation.Lenient));
-			Assert.AreEqual(("one", "two"), Three.ToTuple2(ArgumentValidation.Lenient));
+	[Test]
+	public static void ToTuple() {
+		Assert.Throws<InvalidOperationException>(() => Empty.ToTuple2(ArgumentValidation.Strict));
+		Assert.Throws<InvalidOperationException>(() => One.ToTuple2(ArgumentValidation.Strict));
+		Assert.AreEqual(("one", "two"), Two.ToTuple2(ArgumentValidation.Strict));
+		Assert.Throws<InvalidOperationException>(() => Three.ToTuple2(ArgumentValidation.Strict));
 
-			Assert.AreEqual(("_", "_"), Empty.ToTuple2("_", ArgumentValidation.Strict));
-			Assert.AreEqual(("one", "_"), One.ToTuple2("_", ArgumentValidation.Strict));
-			Assert.AreEqual(("one", "two"), Two.ToTuple2("_", ArgumentValidation.Strict));
-			Assert.Throws<InvalidOperationException>(() => Three.ToTuple2("_", ArgumentValidation.Strict));
+		Assert.Throws<InvalidOperationException>(() => Empty.ToTuple2(ArgumentValidation.Lenient));
+		Assert.Throws<InvalidOperationException>(() => One.ToTuple2(ArgumentValidation.Lenient));
+		Assert.AreEqual(("one", "two"), Two.ToTuple2(ArgumentValidation.Lenient));
+		Assert.AreEqual(("one", "two"), Three.ToTuple2(ArgumentValidation.Lenient));
 
-			Assert.AreEqual(("_", "_"), Empty.ToTuple2("_", ArgumentValidation.Lenient));
-			Assert.AreEqual(("one", "_"), One.ToTuple2("_", ArgumentValidation.Lenient));
-			Assert.AreEqual(("one", "two"), Two.ToTuple2("_", ArgumentValidation.Lenient));
-			Assert.AreEqual(("one", "two"), Three.ToTuple2("_", ArgumentValidation.Lenient));
+		Assert.AreEqual(("_", "_"), Empty.ToTuple2("_", ArgumentValidation.Strict));
+		Assert.AreEqual(("one", "_"), One.ToTuple2("_", ArgumentValidation.Strict));
+		Assert.AreEqual(("one", "two"), Two.ToTuple2("_", ArgumentValidation.Strict));
+		Assert.Throws<InvalidOperationException>(() => Three.ToTuple2("_", ArgumentValidation.Strict));
 
-			Assert.AreEqual(("0", "1"), Empty.ToTuple2(i => i.ToString(), ArgumentValidation.Strict));
-			Assert.AreEqual(("one", "1"), One.ToTuple2(i => i.ToString(), ArgumentValidation.Strict));
-			Assert.AreEqual(("one", "two"), Two.ToTuple2(i => i.ToString(), ArgumentValidation.Strict));
-			Assert.Throws<InvalidOperationException>(() => Three.ToTuple2(i => i.ToString(), ArgumentValidation.Strict));
+		Assert.AreEqual(("_", "_"), Empty.ToTuple2("_", ArgumentValidation.Lenient));
+		Assert.AreEqual(("one", "_"), One.ToTuple2("_", ArgumentValidation.Lenient));
+		Assert.AreEqual(("one", "two"), Two.ToTuple2("_", ArgumentValidation.Lenient));
+		Assert.AreEqual(("one", "two"), Three.ToTuple2("_", ArgumentValidation.Lenient));
 
-			Assert.AreEqual(("0", "1"), Empty.ToTuple2(i => i.ToString(), ArgumentValidation.Lenient));
-			Assert.AreEqual(("one", "1"), One.ToTuple2(i => i.ToString(), ArgumentValidation.Lenient));
-			Assert.AreEqual(("one", "two"), Two.ToTuple2(i => i.ToString(), ArgumentValidation.Lenient));
-			Assert.AreEqual(("one", "two"), Three.ToTuple2(i => i.ToString(), ArgumentValidation.Lenient));
-		}
+		Assert.AreEqual(("0", "1"), Empty.ToTuple2(i => i.ToString(), ArgumentValidation.Strict));
+		Assert.AreEqual(("one", "1"), One.ToTuple2(i => i.ToString(), ArgumentValidation.Strict));
+		Assert.AreEqual(("one", "two"), Two.ToTuple2(i => i.ToString(), ArgumentValidation.Strict));
+		Assert.Throws<InvalidOperationException>(() => Three.ToTuple2(i => i.ToString(), ArgumentValidation.Strict));
 
-		[Test]
-		public static void Select() => Assert.AreEqual((3, 5, 7), (1, 2, 3).Select(x => 2 * x + 1));
+		Assert.AreEqual(("0", "1"), Empty.ToTuple2(i => i.ToString(), ArgumentValidation.Lenient));
+		Assert.AreEqual(("one", "1"), One.ToTuple2(i => i.ToString(), ArgumentValidation.Lenient));
+		Assert.AreEqual(("one", "two"), Two.ToTuple2(i => i.ToString(), ArgumentValidation.Lenient));
+		Assert.AreEqual(("one", "two"), Three.ToTuple2(i => i.ToString(), ArgumentValidation.Lenient));
 	}
+
+	[Test]
+	public static void Select() => Assert.AreEqual((3, 5, 7), (1, 2, 3).Select(x => 2 * x + 1));
 }

@@ -6,14 +6,13 @@ namespace LinqToYourDoom.SourceGenerators.Utilities {
 			code.AppendLine(@"using System;");
 			code.AppendLine(@"using System.Runtime.CompilerServices;");
 
-			code.AppendLine(@"namespace LinqToYourDoom {"); {
-				code.AppendLine(@"public static partial class NumberExtensions {"); {
-					GenerateDivRem(code);
-					GenerateAbs(code);
-					GenerateSign(code);
-					Generate_(code);
-				}
-				code.AppendLine(@"}");
+			code.AppendLine(@"namespace LinqToYourDoom;");
+
+			code.AppendLine(@"public static partial class NumberExtensions {"); {
+				GenerateDivRem(code);
+				GenerateAbs(code);
+				GenerateSign(code);
+				Generate_(code);
 			}
 			code.AppendLine(@"}");
 		}
