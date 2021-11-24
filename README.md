@@ -111,6 +111,7 @@ enumerable.SelectDefault(i => new(i)); // IEnumerable<T?> => IEnumerable<T>
 
 enumerable.Each(it => LazyAction(it));
 enumerable.TrySelect((T it, out float value) => it.TryGetValue("B", out value));
+enumerable.TrySelect(it => (it.HasValue, it.GetValueOrThrow()));
 
 enumerable.DefaultIfEmpty(fallbackEnumerable) {
 

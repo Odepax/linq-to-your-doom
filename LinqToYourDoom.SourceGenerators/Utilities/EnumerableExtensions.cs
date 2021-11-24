@@ -112,6 +112,27 @@ namespace LinqToYourDoom.SourceGenerators.Utilities {
 					code.AppendLine($@"yield return @out;");
 				}
 				code.AppendLine($@"}}");
+
+				code.AppendLine($@"/// <inheritdoc cref=""TrySelect{{TIn, TOut}}(IEnumerable{{TIn}}, TryFunc{{TIn, TOut}})""/>");
+				code.AppendLine($@"public static IEnumerable<TOut> TrySelect<{ TYPES }, TOut>(this IEnumerable<({ TYPES })> @this, Func<{ TYPES }, (bool, TOut)> trySelector) {{"); {
+					code.AppendLine($@"foreach (var item in @this) {{"); {
+						code.AppendLine($@"var (@in, @out) = trySelector.Invoke({ ITEMS });");
+						code.AppendLine($@"if (@in) yield return @out;");
+					}
+					code.AppendLine($@"}}");
+				}
+				code.AppendLine($@"}}");
+
+				code.AppendLine($@"/// <inheritdoc cref=""TrySelect{{TIn, TOut}}(IEnumerable{{TIn}}, TryFunc{{TIn, TOut}})""/>");
+				code.AppendLine($@"public static IEnumerable<TOut> TrySelect<{ TYPES }, TOut>(this IEnumerable<({ TYPES })> @this, Func<{ TYPES }, int, (bool, TOut)> trySelector) {{"); {
+					code.AppendLine($@"int i = -1;");
+					code.AppendLine($@"foreach (var item in @this) {{"); {
+						code.AppendLine($@"var (@in, @out) = trySelector.Invoke({ ITEMS }, ++i);");
+						code.AppendLine($@"if (@in) yield return @out;");
+					}
+					code.AppendLine($@"}}");
+				}
+				code.AppendLine($@"}}");
 			}
 		}
 	}

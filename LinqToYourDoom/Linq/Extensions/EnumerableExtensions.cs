@@ -776,15 +776,55 @@ public static partial class EnumerableExtensions {
 				yield return @out;
 	}
 
+	/// <inheritdoc cref="TrySelect{TIn, TOut}(IEnumerable{TIn}, TryFunc{TIn, TOut})"/>
+	public static IEnumerable<TOut> TrySelect<TIn, TOut>(this IEnumerable<TIn> @this, Func<TIn, (bool, TOut)> trySelector) {
+		foreach (var item in @this) {
+			var (@in, @out) = trySelector.Invoke(item);
+
+			if (@in) yield return @out;
+		}
+	}
+
+	/// <inheritdoc cref="TrySelect{TIn, TOut}(IEnumerable{TIn}, TryFunc{TIn, TOut})"/>
+	public static IEnumerable<TOut> TrySelect<TIn, TOut>(this IEnumerable<TIn> @this, Func<TIn, int, (bool, TOut)> trySelector) {
+		int i = -1;
+		foreach (var item in @this) {
+			var (@in, @out) = trySelector.Invoke(item, ++i);
+
+			if (@in) yield return @out;
+		}
+	}
+
+	/// <inheritdoc cref="TrySelect{TIn, TOut}(IEnumerable{TIn}, TryFunc{TIn, TOut})"/>
+	public static IEnumerable<TOut> TrySelect<TKey, TValue, TOut>(this IEnumerable<KeyValuePair<TKey, TValue>> @this, Func<TKey, TValue, (bool, TOut)> trySelector) {
+		foreach (var item in @this) {
+			var (@in, @out) = trySelector.Invoke(item.Key, item.Value);
+
+			if (@in) yield return @out;
+		}
+	}
+
+	/// <inheritdoc cref="TrySelect{TIn, TOut}(IEnumerable{TIn}, TryFunc{TIn, TOut})"/>
+	public static IEnumerable<TOut> TrySelect<TKey, TValue, TOut>(this IEnumerable<KeyValuePair<TKey, TValue>> @this, Func<TKey, TValue, int, (bool, TOut)> trySelector) {
+		int i = -1;
+		foreach (var item in @this) {
+			var (@in, @out) = trySelector.Invoke(item.Key, item.Value, ++i);
+
+			if (@in) yield return @out;
+		}
+	}
+
 	/// <summary>
 	/// Eagerly enumerates <paramref name="this"/> sequence,
-	/// effectively invoking the transformations in the pipeline, alike <see langword="foreach"/> would do.
+	/// effectively invoking the transformations in the pipeline,
+	/// like <see langword="foreach"/> would do.
 	/// </summary>
 	///
-	/// <returns> <paramref name="this"/> </returns>
+	/// <returns> <paramref name="this"/>. </returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static IEnumerable<T> Enumerate<T>(this IEnumerable<T> @this) {
-		foreach (var _ in @this) ;
+		foreach (var _ in @this)
+			continue;
 
 		return @this;
 	}

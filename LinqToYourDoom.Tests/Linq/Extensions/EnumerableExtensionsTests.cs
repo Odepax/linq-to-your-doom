@@ -490,6 +490,11 @@ static class EnumerableExtensionsTests {
 		}, enumerableOfDictionaries.TrySelect((Dictionary<string, float> bag, out float value) => bag.TryGetValue("B", out value)));
 
 		Assert.AreEqual(new[] {
+			42.0f,
+			666f
+		}, enumerableOfDictionaries.TrySelect(bag => bag.ContainsKey("B") ? (true, bag["B"]) : (false, default)));
+
+		Assert.AreEqual(new[] {
 			(true, 42.0f),
 			(false, default),
 			(true, 666f)
