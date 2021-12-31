@@ -196,4 +196,14 @@ static class StringExtensionsTests {
 		Assert.AreEqual("Xx.", string.Empty?.Prepend('.').Prepend("Xx"));
 		Assert.AreEqual("Yy.Xx", "Xx"?.Prepend('.').Prepend("Yy"));
 	}
+
+	[Test]
+	[TestCase("")]
+	[TestCase("Whatever")]
+	public static void ToBytes(string data) {
+		Assert.AreEqual(data, data.ToAsciiBytes().ToAsciiString());
+		Assert.AreEqual(data, data.ToUtf8Bytes().ToUtf8String());
+		Assert.AreEqual(data, data.ToUtf16Bytes().ToUtf16String());
+		Assert.AreEqual(data, data.ToUtf32Bytes().ToUtf32String());
+	}
 }

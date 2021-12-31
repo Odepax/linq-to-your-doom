@@ -197,35 +197,67 @@ public static class StringExtensions {
 		return @this.Substring(startIndex, length);
 	}
 
-	[MethodImpl(MethodImplOptions.AggressiveInlining)] public static byte[] ToBytes(this string @this, Encoding encoding) => encoding.GetBytes(@this);
-	[MethodImpl(MethodImplOptions.AggressiveInlining)] public static byte[] ToAsciiBytes(this string @this) => Encoding.ASCII.GetBytes(@this);
+	/// <summary>
+	/// Encodes <paramref name="this"/> string into a sequence of encoded bytes.
+	/// </summary>
+	///
+	/// <seealso cref="Encoding.GetBytes(string)"/>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static byte[] ToBytes(this string @this, Encoding encoding) => encoding.GetBytes(@this);
+
+	/// <summary>
+	/// Encodes <paramref name="this"/> string into a sequence of ASCII bytes.
+	/// </summary>
+	///
+	/// <seealso cref="Encoding.GetBytes(string)"/>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static byte[] ToAsciiBytes(this string @this) => Encoding.ASCII.GetBytes(@this);
 
 	/// <summary>
 	/// Encodes <paramref name="this"/> string into a sequence of UTF-no-BOM bytes.
 	/// </summary>
 	///
 	/// <seealso cref="Encoding.GetBytes(string)"/>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)] public static byte[] ToUtf8Bytes(this string @this) => UtfNoBomEncoding.Utf8NoBom.GetBytes(@this);
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static byte[] ToUtf8Bytes(this string @this) => EncodingD.Utf8NoBom.GetBytes(@this);
 
 	/// <inheritdoc cref="ToUtf8Bytes(string)"/>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)] public static byte[] ToUtf16Bytes(this string @this) => UtfNoBomEncoding.Utf16NoBom.GetBytes(@this);
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static byte[] ToUtf16Bytes(this string @this) => EncodingD.Utf16NoBom.GetBytes(@this);
 
 	/// <inheritdoc cref="ToUtf8Bytes(string)"/>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)] public static byte[] ToUtf32Bytes(this string @this) => UtfNoBomEncoding.Utf32NoBom.GetBytes(@this);
-
-	[MethodImpl(MethodImplOptions.AggressiveInlining)] public static string ToString(this byte[] @this, Encoding encoding) => encoding.GetString(@this);
-	[MethodImpl(MethodImplOptions.AggressiveInlining)] public static string ToAsciiString(this byte[] @this) => Encoding.ASCII.GetString(@this);
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static byte[] ToUtf32Bytes(this string @this) => EncodingD.Utf32NoBom.GetBytes(@this);
 
 	/// <summary>
-	/// Decodes <paramref name="this"/> sequence UTF-no-BOM bytes into a string.
+	/// Decodes <paramref name="this"/> sequence of encoded bytes into a string.
 	/// </summary>
 	///
 	/// <seealso cref="Encoding.GetString(byte[])"/>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)] public static string ToUtf8String(this byte[] @this) => UtfNoBomEncoding.Utf8NoBom.GetString(@this);
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static string ToString(this byte[] @this, Encoding encoding) => encoding.GetString(@this);
+
+	/// <summary>
+	/// Decodes <paramref name="this"/> sequence of ASCII bytes into a string.
+	/// </summary>
+	///
+	/// <seealso cref="Encoding.GetString(byte[])"/>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static string ToAsciiString(this byte[] @this) => Encoding.ASCII.GetString(@this);
+
+	/// <summary>
+	/// Decodes <paramref name="this"/> sequence of UTF-no-BOM bytes into a string.
+	/// </summary>
+	///
+	/// <seealso cref="Encoding.GetString(byte[])"/>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static string ToUtf8String(this byte[] @this) => EncodingD.Utf8NoBom.GetString(@this);
 
 	/// <inheritdoc cref="ToUtf8String(byte[])"/>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)] public static string ToUtf16String(this byte[] @this) => UtfNoBomEncoding.Utf16NoBom.GetString(@this);
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static string ToUtf16String(this byte[] @this) => EncodingD.Utf16NoBom.GetString(@this);
 
 	/// <inheritdoc cref="ToUtf8String(byte[])"/>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)] public static string ToUtf32String(this byte[] @this) => UtfNoBomEncoding.Utf32NoBom.GetString(@this);
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static string ToUtf32String(this byte[] @this) => EncodingD.Utf32NoBom.GetString(@this);
 }
