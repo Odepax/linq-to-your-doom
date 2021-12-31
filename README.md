@@ -59,23 +59,17 @@ a.Assign(b);
 // ] };
 ```
 
-### `SymbolDictionary`
+### `TypedDictionary`
 
-A collection where the _type_ on each key matches the type of its value on a key-value-pair basis, inspired by JavaScript's [`Symbol`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol]) objects.
-
-`SymbolDictionary` is a typed value bag: unlike `IDictionary<K, V>`, where all keys have the same type `K`, and all values have the same type `V`, `SymbolDictionary` uses `Symbol<T>` keys to maintain type safety while allowing each key-value-pair to have its distinct type.
+`TypeDictionary` is a proxy to a standard dictionary, allowing to retrieve values while also specifying a narrower return type.
 
 ```cs
-symbolDictionary.Get(key); // Get or throw.
-symbolDictionary.TryGet(key, out var value);
-symbolDictionary.GetOrDefault(key, defaultValue);
-symbolDictionary.GetOrSet(key, defaultValue);
+var dictionary = new Dictionary<TKey, object>();
 
-symbolDictionary.Set(key, value); // Overrides existing.
-symbolDictionary.SetDefault(key, value); // Preserves existing.
-symbolDictionary.Add(key, value); // Throws when already exists.
-
-symbolDictionary.TryRemove(key, out _);
+dictionary.AsTyped().Get<int>(key); // Get or throw.
+dictionary.AsTyped().TryGet<string>(key, out var value);
+dictionary.AsTyped().GetOrDefault<float>(key, defaultValue);
+dictionary.AsTyped().GetOrSet<Cat>(key, defaultValue);
 ```
 
 ### Cloneable Interfaces

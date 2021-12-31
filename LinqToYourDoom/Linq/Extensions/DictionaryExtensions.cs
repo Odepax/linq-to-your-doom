@@ -114,4 +114,7 @@ public static class DictionaryExtensions {
 			return @this[key] = defaultValue;
 		}
 	}
+
+	public static TypedDictionary<TKey, TValue> AsTyped<TKey, TValue>(this IDictionary<TKey, TValue> @this) =>
+		new(@this);
 }
