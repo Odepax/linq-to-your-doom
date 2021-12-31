@@ -5,7 +5,7 @@ namespace LinqToYourDoom.Tests.Math.Extensions;
 
 static class NumberExtensionsTests {
 	[Test]
-	public static void CoerceTo_() {
+	public static void To_and_CoerceTo_() {
 		Assert.AreEqual(float.MinValue, double.MinValue.CoerceToFloat());
 		Assert.AreEqual(float.MaxValue, double.MaxValue.CoerceToFloat());
 		Assert.AreEqual(decimal.MinValue, double.MinValue.CoerceToDecimal());
@@ -27,6 +27,8 @@ static class NumberExtensionsTests {
 		Assert.AreEqual(sbyte.MinValue, double.MinValue.CoerceToSByte());
 		Assert.AreEqual(sbyte.MaxValue, double.MaxValue.CoerceToSByte());
 
+		Assert.AreEqual((double) float.MinValue, float.MinValue.ToDouble());
+		Assert.AreEqual((double) float.MaxValue, float.MaxValue.ToDouble());
 		Assert.AreEqual(decimal.MinValue, float.MinValue.CoerceToDecimal());
 		Assert.AreEqual(decimal.MaxValue, float.MaxValue.CoerceToDecimal());
 		Assert.AreEqual(ulong.MinValue, float.MinValue.CoerceToULong());
@@ -46,6 +48,10 @@ static class NumberExtensionsTests {
 		Assert.AreEqual(sbyte.MinValue, float.MinValue.CoerceToSByte());
 		Assert.AreEqual(sbyte.MaxValue, float.MaxValue.CoerceToSByte());
 
+		Assert.AreEqual((double) decimal.MinValue, decimal.MinValue.ToDouble());
+		Assert.AreEqual((double) decimal.MaxValue, decimal.MaxValue.ToDouble());
+		Assert.AreEqual((float) decimal.MinValue, decimal.MinValue.ToFloat());
+		Assert.AreEqual((float) decimal.MaxValue, decimal.MaxValue.ToFloat());
 		Assert.AreEqual(ulong.MinValue, decimal.MinValue.CoerceToULong());
 		Assert.AreEqual(ulong.MaxValue, decimal.MaxValue.CoerceToULong());
 		Assert.AreEqual(long.MinValue, decimal.MinValue.CoerceToLong());
@@ -63,6 +69,12 @@ static class NumberExtensionsTests {
 		Assert.AreEqual(sbyte.MinValue, decimal.MinValue.CoerceToSByte());
 		Assert.AreEqual(sbyte.MaxValue, decimal.MaxValue.CoerceToSByte());
 
+		Assert.AreEqual((double) ulong.MinValue, ulong.MinValue.ToDouble());
+		Assert.AreEqual((double) ulong.MaxValue, ulong.MaxValue.ToDouble());
+		Assert.AreEqual((float) ulong.MinValue, ulong.MinValue.ToFloat());
+		Assert.AreEqual((float) ulong.MaxValue, ulong.MaxValue.ToFloat());
+		Assert.AreEqual((float) ulong.MinValue, ulong.MinValue.ToDecimal());
+		Assert.AreEqual((float) ulong.MaxValue, ulong.MaxValue.ToDecimal());
 		Assert.AreEqual((long) 0, ulong.MinValue.CoerceToLong());
 		Assert.AreEqual(long.MaxValue, ulong.MaxValue.CoerceToLong());
 		Assert.AreEqual(uint.MinValue, ulong.MinValue.CoerceToUInt());
@@ -78,6 +90,12 @@ static class NumberExtensionsTests {
 		Assert.AreEqual((sbyte) 0, ulong.MinValue.CoerceToSByte());
 		Assert.AreEqual(sbyte.MaxValue, ulong.MaxValue.CoerceToSByte());
 
+		Assert.AreEqual((double) long.MinValue, long.MinValue.ToDouble());
+		Assert.AreEqual((double) long.MaxValue, long.MaxValue.ToDouble());
+		Assert.AreEqual((float) long.MinValue, long.MinValue.ToFloat());
+		Assert.AreEqual((float) long.MaxValue, long.MaxValue.ToFloat());
+		Assert.AreEqual((float) long.MinValue, long.MinValue.ToDecimal());
+		Assert.AreEqual((float) long.MaxValue, long.MaxValue.ToDecimal());
 		Assert.AreEqual(ulong.MinValue, long.MinValue.CoerceToULong());
 		Assert.AreEqual(long.MaxValue, long.MaxValue.CoerceToULong());
 		Assert.AreEqual(uint.MinValue, long.MinValue.CoerceToUInt());
@@ -93,6 +111,16 @@ static class NumberExtensionsTests {
 		Assert.AreEqual(sbyte.MinValue, long.MinValue.CoerceToSByte());
 		Assert.AreEqual(sbyte.MaxValue, long.MaxValue.CoerceToSByte());
 
+		Assert.AreEqual((double) uint.MinValue, uint.MinValue.ToDouble());
+		Assert.AreEqual((double) uint.MaxValue, uint.MaxValue.ToDouble());
+		Assert.AreEqual((float) uint.MinValue, uint.MinValue.ToFloat());
+		Assert.AreEqual((float) uint.MaxValue, uint.MaxValue.ToFloat());
+		Assert.AreEqual((float) uint.MinValue, uint.MinValue.ToDecimal());
+		Assert.AreEqual((float) uint.MaxValue, uint.MaxValue.ToDecimal());
+		Assert.AreEqual((ulong) uint.MinValue, uint.MinValue.ToULong());
+		Assert.AreEqual((ulong) uint.MaxValue, uint.MaxValue.ToULong());
+		Assert.AreEqual((long) 0, uint.MinValue.ToLong());
+		Assert.AreEqual((long) uint.MaxValue, uint.MaxValue.ToLong());
 		Assert.AreEqual((int) 0, uint.MinValue.CoerceToInt());
 		Assert.AreEqual(int.MaxValue, uint.MaxValue.CoerceToInt());
 		Assert.AreEqual(ushort.MinValue, uint.MinValue.CoerceToUShort());
@@ -104,6 +132,16 @@ static class NumberExtensionsTests {
 		Assert.AreEqual((sbyte) 0, uint.MinValue.CoerceToSByte());
 		Assert.AreEqual(sbyte.MaxValue, uint.MaxValue.CoerceToSByte());
 
+		Assert.AreEqual((double) int.MinValue, int.MinValue.ToDouble());
+		Assert.AreEqual((double) int.MaxValue, int.MaxValue.ToDouble());
+		Assert.AreEqual((float) int.MinValue, int.MinValue.ToFloat());
+		Assert.AreEqual((float) int.MaxValue, int.MaxValue.ToFloat());
+		Assert.AreEqual((float) int.MinValue, int.MinValue.ToDecimal());
+		Assert.AreEqual((float) int.MaxValue, int.MaxValue.ToDecimal());
+		Assert.AreEqual(ulong.MinValue, int.MinValue.CoerceToULong());
+		Assert.AreEqual((ulong) int.MaxValue, int.MaxValue.CoerceToULong());
+		Assert.AreEqual((long) int.MinValue, int.MinValue.ToLong());
+		Assert.AreEqual((long) int.MaxValue, int.MaxValue.ToLong());
 		Assert.AreEqual(uint.MinValue, int.MinValue.CoerceToUInt());
 		Assert.AreEqual(int.MaxValue, int.MaxValue.CoerceToUInt());
 		Assert.AreEqual(ushort.MinValue, int.MinValue.CoerceToUShort());
@@ -115,6 +153,20 @@ static class NumberExtensionsTests {
 		Assert.AreEqual(sbyte.MinValue, int.MinValue.CoerceToSByte());
 		Assert.AreEqual(sbyte.MaxValue, int.MaxValue.CoerceToSByte());
 
+		Assert.AreEqual((double) ushort.MinValue, ushort.MinValue.ToDouble());
+		Assert.AreEqual((double) ushort.MaxValue, ushort.MaxValue.ToDouble());
+		Assert.AreEqual((float) ushort.MinValue, ushort.MinValue.ToFloat());
+		Assert.AreEqual((float) ushort.MaxValue, ushort.MaxValue.ToFloat());
+		Assert.AreEqual((float) ushort.MinValue, ushort.MinValue.ToDecimal());
+		Assert.AreEqual((float) ushort.MaxValue, ushort.MaxValue.ToDecimal());
+		Assert.AreEqual((ulong) ushort.MinValue, ushort.MinValue.ToULong());
+		Assert.AreEqual((ulong) ushort.MaxValue, ushort.MaxValue.ToULong());
+		Assert.AreEqual((long) ushort.MinValue, ushort.MinValue.ToLong());
+		Assert.AreEqual((long) ushort.MaxValue, ushort.MaxValue.ToLong());
+		Assert.AreEqual((ulong) ushort.MinValue, ushort.MinValue.ToUInt());
+		Assert.AreEqual((ulong) ushort.MaxValue, ushort.MaxValue.ToUInt());
+		Assert.AreEqual((int) ushort.MinValue, ushort.MinValue.ToInt());
+		Assert.AreEqual((int) ushort.MaxValue, ushort.MaxValue.ToInt());
 		Assert.AreEqual((short) 0, ushort.MinValue.CoerceToShort());
 		Assert.AreEqual(short.MaxValue, ushort.MaxValue.CoerceToShort());
 		Assert.AreEqual(byte.MinValue, ushort.MinValue.CoerceToByte());
@@ -122,16 +174,66 @@ static class NumberExtensionsTests {
 		Assert.AreEqual((sbyte) 0, ushort.MinValue.CoerceToSByte());
 		Assert.AreEqual(sbyte.MaxValue, ushort.MaxValue.CoerceToSByte());
 
+		Assert.AreEqual((double) short.MinValue, short.MinValue.ToDouble());
+		Assert.AreEqual((double) short.MaxValue, short.MaxValue.ToDouble());
+		Assert.AreEqual((float) short.MinValue, short.MinValue.ToFloat());
+		Assert.AreEqual((float) short.MaxValue, short.MaxValue.ToFloat());
+		Assert.AreEqual((float) short.MinValue, short.MinValue.ToDecimal());
+		Assert.AreEqual((float) short.MaxValue, short.MaxValue.ToDecimal());
+		Assert.AreEqual(ulong.MinValue, short.MinValue.CoerceToULong());
+		Assert.AreEqual((ulong) short.MaxValue, short.MaxValue.CoerceToULong());
+		Assert.AreEqual((long) short.MinValue, short.MinValue.ToLong());
+		Assert.AreEqual((long) short.MaxValue, short.MaxValue.ToLong());
+		Assert.AreEqual(uint.MinValue, short.MinValue.CoerceToUInt());
+		Assert.AreEqual((uint) short.MaxValue, short.MaxValue.CoerceToUInt());
+		Assert.AreEqual((int) short.MinValue, short.MinValue.ToInt());
+		Assert.AreEqual((int) short.MaxValue, short.MaxValue.ToInt());
 		Assert.AreEqual(ushort.MinValue, short.MinValue.CoerceToUShort());
-		Assert.AreEqual(short.MaxValue, short.MaxValue.CoerceToUShort());
+		Assert.AreEqual((ushort) short.MaxValue, short.MaxValue.CoerceToUShort());
 		Assert.AreEqual(byte.MinValue, short.MinValue.CoerceToByte());
 		Assert.AreEqual(byte.MaxValue, short.MaxValue.CoerceToByte());
 		Assert.AreEqual(sbyte.MinValue, short.MinValue.CoerceToSByte());
 		Assert.AreEqual(sbyte.MaxValue, short.MaxValue.CoerceToSByte());
 
+		Assert.AreEqual((double) byte.MinValue, byte.MinValue.ToDouble());
+		Assert.AreEqual((double) byte.MaxValue, byte.MaxValue.ToDouble());
+		Assert.AreEqual((float) byte.MinValue, byte.MinValue.ToFloat());
+		Assert.AreEqual((float) byte.MaxValue, byte.MaxValue.ToFloat());
+		Assert.AreEqual((float) byte.MinValue, byte.MinValue.ToDecimal());
+		Assert.AreEqual((float) byte.MaxValue, byte.MaxValue.ToDecimal());
+		Assert.AreEqual((ulong) byte.MinValue, byte.MinValue.ToULong());
+		Assert.AreEqual((ulong) byte.MaxValue, byte.MaxValue.ToULong());
+		Assert.AreEqual((long) byte.MinValue, byte.MinValue.ToLong());
+		Assert.AreEqual((long) byte.MaxValue, byte.MaxValue.ToLong());
+		Assert.AreEqual((uint) byte.MinValue, byte.MinValue.ToUInt());
+		Assert.AreEqual((uint) byte.MaxValue, byte.MaxValue.ToUInt());
+		Assert.AreEqual((int) byte.MinValue, byte.MinValue.ToInt());
+		Assert.AreEqual((int) byte.MaxValue, byte.MaxValue.ToInt());
+		Assert.AreEqual((ushort) byte.MinValue, byte.MinValue.ToUShort());
+		Assert.AreEqual((ushort) byte.MaxValue, byte.MaxValue.ToUShort());
+		Assert.AreEqual((short) byte.MinValue, byte.MinValue.ToShort());
+		Assert.AreEqual((short) byte.MaxValue, byte.MaxValue.ToShort());
 		Assert.AreEqual((sbyte) 0, byte.MinValue.CoerceToSByte());
 		Assert.AreEqual(sbyte.MaxValue, byte.MaxValue.CoerceToSByte());
 
+		Assert.AreEqual((double) sbyte.MinValue, sbyte.MinValue.ToDouble());
+		Assert.AreEqual((double) sbyte.MaxValue, sbyte.MaxValue.ToDouble());
+		Assert.AreEqual((float) sbyte.MinValue, sbyte.MinValue.ToFloat());
+		Assert.AreEqual((float) sbyte.MaxValue, sbyte.MaxValue.ToFloat());
+		Assert.AreEqual((float) sbyte.MinValue, sbyte.MinValue.ToDecimal());
+		Assert.AreEqual((float) sbyte.MaxValue, sbyte.MaxValue.ToDecimal());
+		Assert.AreEqual(ulong.MinValue, sbyte.MinValue.CoerceToULong());
+		Assert.AreEqual((ulong) sbyte.MaxValue, sbyte.MaxValue.CoerceToULong());
+		Assert.AreEqual((long) sbyte.MinValue, sbyte.MinValue.ToLong());
+		Assert.AreEqual((long) sbyte.MaxValue, sbyte.MaxValue.ToLong());
+		Assert.AreEqual(uint.MinValue, sbyte.MinValue.CoerceToUInt());
+		Assert.AreEqual((uint) sbyte.MaxValue, sbyte.MaxValue.CoerceToUInt());
+		Assert.AreEqual((int) sbyte.MinValue, sbyte.MinValue.ToInt());
+		Assert.AreEqual((int) sbyte.MaxValue, sbyte.MaxValue.ToInt());
+		Assert.AreEqual(ushort.MinValue, sbyte.MinValue.CoerceToUShort());
+		Assert.AreEqual((ushort) sbyte.MaxValue, sbyte.MaxValue.CoerceToUShort());
+		Assert.AreEqual((short) sbyte.MinValue, sbyte.MinValue.ToShort());
+		Assert.AreEqual((short) sbyte.MaxValue, sbyte.MaxValue.ToShort());
 		Assert.AreEqual(byte.MinValue, sbyte.MinValue.CoerceToByte());
 		Assert.AreEqual(sbyte.MaxValue, sbyte.MaxValue.CoerceToByte());
 	}
@@ -144,7 +246,7 @@ static class NumberExtensionsTests {
 		Assert.Throws<DivideByZeroException>(() => 12.DivRem(0, ArgumentValidation.Strict));
 		Assert.AreEqual((12, 0), 12.DivRem(0, ArgumentValidation.Lenient));
 	}
-		
+
 	[Test]
 	[TestCase(-12)]
 	[TestCase(0)]
