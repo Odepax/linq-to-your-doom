@@ -16,5 +16,5 @@ public abstract class BugException : NotImplementedException {
 	/// <param name="reportUrl">
 	/// The URL to your issue tracker, or the e-mail address of your customer service.
 	/// </param>
-	protected BugException(string bugId, string reportUrl) : base(bugId + ": This is a bug. Please report it at " + reportUrl + '.') {}
+	protected BugException(string bugId, string reportUrl, Exception? innerException = null) : base(bugId + ": This is a bug. Please report it at " + reportUrl + '.', innerException) {}
 }

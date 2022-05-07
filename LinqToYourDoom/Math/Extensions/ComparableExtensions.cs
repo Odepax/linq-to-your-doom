@@ -34,7 +34,7 @@ public static class ComparableExtensions {
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static T UncheckedCoerceIn<T>(this T @this, T min, T max) where T : IComparable<T> =>
-			@this.CompareTo(min) < 0 ? min
+		  @this.CompareTo(min) < 0 ? min
 		: max.CompareTo(@this) < 0 ? max
 		: @this;
 }
