@@ -26,10 +26,10 @@ public static class LazyExtensions {
 	/// Equivalent of <see cref="List{T}.ForEach(Action{T})"/> for a <see cref="Lazy{T}"/> object.
 	///
 	/// Note that <see cref="List{T}.ForEach(Action{T})"/> is <b>eager</b>,
-	/// whereas <see cref="Into{T}(Lazy{T}, Action{T}, LazyThreadSafetyMode)"/> is <b>lazy</b>.
+	/// whereas <see cref="Also{T}(Lazy{T}, Action{T}, LazyThreadSafetyMode)"/> is <b>lazy</b>.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Lazy<T> Into<T>(this Lazy<T> @this, Action<T> action, LazyThreadSafetyMode mode = default) =>
+	public static Lazy<T> Also<T>(this Lazy<T> @this, Action<T> action, LazyThreadSafetyMode mode = default) =>
 		new(() => {
 			var value = @this.Value;
 

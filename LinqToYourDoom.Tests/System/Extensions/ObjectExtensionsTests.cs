@@ -130,20 +130,20 @@ static class ObjectExtensionsTests {
 	}
 
 	[Test]
-	public static void Into() {
+	public static void Also() {
 		(bool, int, int) x = default;
 		string y = null!;
 
-		("ABC", 1, true).Into((a, b, c) => { x = (!c, a.Length, b * 10); });
+		("ABC", 1, true).Also((a, b, c) => { x = (!c, a.Length, b * 10); });
 		Assert.AreEqual((false, 3, 10), x);
 
-		KeyValuePair.Create("K", 42).Into((k, v) => { y = k[0..1] + v * 100; });
+		KeyValuePair.Create("K", 42).Also((k, v) => { y = k[0..1] + v * 100; });
 		Assert.AreEqual("K4200", y);
 
-		("A", 2, false).Into((a, b, c) => x = (!c, a.Length, b * 10));
+		("A", 2, false).Also((a, b, c) => x = (!c, a.Length, b * 10));
 		Assert.AreEqual((true, 1, 20), x);
 
-		KeyValuePair.Create("PI", 3.14).Into((k, v) => y = k[0..1] + v * 100);
+		KeyValuePair.Create("PI", 3.14).Also((k, v) => y = k[0..1] + v * 100);
 		Assert.AreEqual("P314", y);
 	}
 }

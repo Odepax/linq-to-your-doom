@@ -16,7 +16,7 @@ static class LazyExtensionsTests {
 
 		var derived = source
 			.As<string>()
-			.Into(it => {
+			.Also(it => {
 				++callCount;
 				upperCase = it.ToUpperInvariant();
 			})

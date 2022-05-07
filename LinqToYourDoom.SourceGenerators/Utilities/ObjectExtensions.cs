@@ -78,11 +78,11 @@ namespace LinqToYourDoom.SourceGenerators.Utilities {
 					code.AppendLine($@"/// Equivalent of <see cref=""List{{T}}.ForEach(Action{{T}})""/> for a value tuple.");
 					code.AppendLine($@"///");
 					code.AppendLine($@"/// Note that both <see cref=""List{{T}}.ForEach(Action{{T}})""/>");
-					code.AppendLine($@"/// and <see cref=""Into{{{ TYPES }}}(ValueTuple{{{ TYPES }}}, Action{{{ TYPES }}})""/> are <b>eager</b>.");
+					code.AppendLine($@"/// and <see cref=""Also{{{ TYPES }}}(ValueTuple{{{ TYPES }}}, Action{{{ TYPES }}})""/> are <b>eager</b>.");
 					code.AppendLine($@"/// </summary>");
 				}
 				code.AppendLine($@"[MethodImpl(MethodImplOptions.AggressiveInlining)]");
-				code.AppendLine($@"public static ({ TYPES }) Into<{ TYPES }>(this ({ TYPES }) @this, Action<{ TYPES }> action) {{"); {
+				code.AppendLine($@"public static ({ TYPES }) Also<{ TYPES }>(this ({ TYPES }) @this, Action<{ TYPES }> action) {{"); {
 					code.AppendLine($@"action.Invoke({ ITEMS });");
 					code.AppendLine($@"return @this;");
 				}
@@ -92,7 +92,7 @@ namespace LinqToYourDoom.SourceGenerators.Utilities {
 				// @see 6452162F-ACE2-4D6B-8D91-BC98B9115762
 				if (i < 8) {
 					code.AppendLine($@"/// <summary>");
-					code.AppendLine($@"/// Equivalent of <see cref=""Into{{{ TYPES }}}(ValueTuple{{{ TYPES }}}, Action{{{ TYPES }}})""/>,");
+					code.AppendLine($@"/// Equivalent of <see cref=""Also{{{ TYPES }}}(ValueTuple{{{ TYPES }}}, Action{{{ TYPES }}})""/>,");
 					code.AppendLine($@"/// but taking a <see cref=""Func{{{ TYPES }, TResult}}""/> and discarding the returned value.");
 					code.AppendLine($@"///");
 					code.AppendLine($@"/// This override discards the returned value instead of blocking the compilation");
@@ -100,7 +100,7 @@ namespace LinqToYourDoom.SourceGenerators.Utilities {
 					code.AppendLine($@"/// </summary>");
 				}
 				code.AppendLine($@"[MethodImpl(MethodImplOptions.AggressiveInlining)]");
-				code.AppendLine($@"public static ({ TYPES }) Into<{ TYPES }, T_>(this ({ TYPES }) @this, Func<{ TYPES }, T_> action) {{"); {
+				code.AppendLine($@"public static ({ TYPES }) Also<{ TYPES }, T_>(this ({ TYPES }) @this, Func<{ TYPES }, T_> action) {{"); {
 					code.AppendLine($@"_ = action.Invoke({ ITEMS });");
 					code.AppendLine($@"return @this;");
 				}
