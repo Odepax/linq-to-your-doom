@@ -12,7 +12,7 @@ public static class ListExtensions {
 	/// <paramref name="this"/>.
 	/// </returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static List<T> Set<T>(this List<T> @this, IEnumerable<T> collection) {
+	public static List<T> SetRange<T>(this List<T> @this, IEnumerable<T> collection) {
 		@this.Clear();
 		@this.AddRange(collection);
 
