@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using NUnit.Framework;
 
 namespace LinqToYourDoom.Tests.System.Extensions;
@@ -44,4 +45,7 @@ static class ValueTupleExtensionsTests {
 
 	[Test]
 	public static void Select() => Assert.AreEqual((3, 5, 7), (1, 2, 3).Select(x => 2 * x + 1));
+
+	[Test]
+	public static void AsEnumerable() => Assert.AreEqual(Three, Three.AsEnumerable().ToArray());
 }

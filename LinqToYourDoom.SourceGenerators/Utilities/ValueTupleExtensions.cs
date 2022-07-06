@@ -55,6 +55,7 @@ namespace LinqToYourDoom.SourceGenerators.Utilities {
 			var INDEXED_ITEMS = "[startIndex] = @this.Item1";
 			var KEYED_ITEMS = "[keySelector.Invoke(@this.Item1)] = @this.Item1";
 			var KEYED_I_ITEMS = "[keySelector.Invoke(@this.Item1, 0)] = @this.Item1";
+			var YIELDED_I_ITEMS = "yield return @this.Item1;";
 
 			for (var i = 2; i <= N; ++i) {
 				TYPES += ", T";
@@ -62,12 +63,16 @@ namespace LinqToYourDoom.SourceGenerators.Utilities {
 				INDEXED_ITEMS += ", [startIndex + " + (i - 1) + "] = @this.Item" + i;
 				KEYED_ITEMS += ", [keySelector.Invoke(@this.Item" + i + ")] = @this.Item" + i;
 				KEYED_I_ITEMS += ", [keySelector.Invoke(@this.Item" + i + ", " + (i - 1) + ")] = @this.Item" + i;
+				YIELDED_I_ITEMS += " yield return @this.Item" + i + ";";
 
 				code.AppendLine($@"[MethodImpl(MethodImplOptions.AggressiveInlining)] public static T[] ToArray<T>(this ({ TYPES }) @this) => new[] {{ { ITEMS } }};");
 				code.AppendLine($@"[MethodImpl(MethodImplOptions.AggressiveInlining)] public static List<T> ToList<T>(this ({ TYPES }) @this) => new() {{ { ITEMS } }};");
 				code.AppendLine($@"[MethodImpl(MethodImplOptions.AggressiveInlining)] public static Dictionary<int, T> ToDictionary<T>(this ({ TYPES }) @this, int startIndex = 0) => new() {{ { INDEXED_ITEMS } }};");
 				code.AppendLine($@"[MethodImpl(MethodImplOptions.AggressiveInlining)] public static Dictionary<TKey, T> ToDictionary<TKey, T>(this ({ TYPES }) @this, Func<T, TKey> keySelector) => new() {{ { KEYED_ITEMS } }};");
 				code.AppendLine($@"[MethodImpl(MethodImplOptions.AggressiveInlining)] public static Dictionary<TKey, T> ToDictionary<TKey, T>(this ({ TYPES }) @this, Func<T, int, TKey> keySelector) => new() {{ { KEYED_I_ITEMS } }};");
+
+				code.AppendLine($@"public static IEnumerable<T> AsEnumerable<T>(this ({ TYPES }) @this) {{ {YIELDED_I_ITEMS} }}");
+				code.AppendLine($@"public static IEnumerator<T> GetEnumerator<T>(this ({ TYPES }) @this) {{ {YIELDED_I_ITEMS} }}");
 			}
 		}
 
@@ -182,6 +187,5 @@ namespace LinqToYourDoom.SourceGenerators.Utilities {
 				code.AppendLine($@"[MethodImpl(MethodImplOptions.AggressiveInlining)] public static ({ OUT_TYPES }) Select<TIn, TOut>(this ({ IN_TYPES }) @this, Func<TIn, TOut> selector) => ({ ITEMS });");
 			}
 		}
-
 	}
 }
