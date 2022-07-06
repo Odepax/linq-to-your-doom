@@ -357,6 +357,35 @@ public static partial class EnumerableExtensions {
 		else return defaultValue;
 	}
 
+	public static IEnumerable<T> WhereMinBy<T, TCompared>(this IEnumerable<T> @this, Func<T, TCompared> selector, IComparer<TCompared>? comparer = default) {
+		using var enumerator = @this.GetEnumerator();
+
+		if (enumerator.MoveNext()) {
+			comparer ??= Comparer<TCompared>.Default;
+
+			var minItems = new List<T> { enumerator.Current };
+			var minCompared = selector.Invoke(enumerator.Current);
+
+			while (enumerator.MoveNext()) {
+				var currentValue = selector.Invoke(enumerator.Current);
+				var comparison = comparer.Compare(currentValue, minCompared);
+
+				if (comparison < 0) { // New min! Get rid of the saved list.
+					minCompared = currentValue;
+					minItems.Clear();
+					minItems.Add(enumerator.Current);
+				}
+
+				else if (comparison == 0) // Same min => add to the list.
+					minItems.Add(enumerator.Current);
+			}
+
+			return minItems;
+		}
+
+		else return Enumerable.Empty<T>();
+	}
+
 	[return: NotNullIfNotNull("defaultValue")]
 	public static T? MaxBy<T, TCompared>(this IEnumerable<T> @this, Func<T, TCompared> selector, T? defaultValue, IComparer<TCompared>? comparer = default) {
 		using var enumerator = @this.GetEnumerator();
@@ -380,6 +409,35 @@ public static partial class EnumerableExtensions {
 		}
 
 		else return defaultValue;
+	}
+
+	public static IEnumerable<T> WhereMaxBy<T, TCompared>(this IEnumerable<T> @this, Func<T, TCompared> selector, IComparer<TCompared>? comparer = default) {
+		using var enumerator = @this.GetEnumerator();
+
+		if (enumerator.MoveNext()) {
+			comparer ??= Comparer<TCompared>.Default;
+
+			var maxItems = new List<T> { enumerator.Current };
+			var maxCompared = selector.Invoke(enumerator.Current);
+
+			while (enumerator.MoveNext()) {
+				var currentValue = selector.Invoke(enumerator.Current);
+				var comparison = comparer.Compare(maxCompared, currentValue);
+
+				if (comparison < 0) {
+					maxCompared = currentValue;
+					maxItems.Clear();
+					maxItems.Add(enumerator.Current);
+				}
+
+				else if (comparison == 0)
+					maxItems.Add(enumerator.Current);
+			}
+
+			return maxItems;
+		}
+
+		else return Enumerable.Empty<T>();
 	}
 
 	/// <summary>

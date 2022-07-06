@@ -437,6 +437,15 @@ static class EnumerableExtensionsTests {
 	}
 
 	[Test]
+	public static void WhereMinBy_WhereMaxBy() {
+		Assert.AreEqual(new[] { "one", "two" }, Many.WhereMinBy(it => it.Length));
+		Assert.AreEqual(new[] { "three" }, Many.WhereMaxBy(it => it.Length));
+
+		Assert.IsEmpty(Empty.WhereMinBy(it => it.Length));
+		Assert.IsEmpty(Empty.WhereMaxBy(it => it.Length));
+	}
+
+	[Test]
 	public static void AbsMin_AbsMax() {
 		var source = new[] { 1, -2, 3, 4, -5 };
 
