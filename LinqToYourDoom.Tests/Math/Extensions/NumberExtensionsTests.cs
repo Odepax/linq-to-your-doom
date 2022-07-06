@@ -541,4 +541,45 @@ static class NumberExtensionsTests {
 		Assert.AreEqual(4.7, 4.65.RoundToMultiple(0.1, ArgumentValidation.Lenient));
 		Assert.AreEqual(4.7, 4.65.RoundToMultiple(-0.1, ArgumentValidation.Lenient)); // Numbers modified to work around shitty precision...
 	}
+
+	[Test]
+	[TestCase(42.69, 42.80, 0.1, false)]
+	[TestCase(42.69, 42.70, 0.1, true)]
+	[TestCase(42.69, 42.70, 0.01, false)] // Heck: 42.70 - 42.69 = 0.010000000000005116
+	[TestCase(42.69, 42.70, 0.01_1, true)] // Heck: 42.70 - 42.69 = 0.010000000000005116
+	[TestCase(42.69, 42.70, 0.001, false)]
+	[TestCase(double.NaN, 42.69, 0.5, false)]
+	[TestCase(double.NaN, double.MinValue, 0.5, false)]
+	[TestCase(double.NaN, double.MaxValue, 0.5, false)]
+	[TestCase(double.NaN, double.NaN, 0.5, false)]
+	[TestCase(double.NaN, double.PositiveInfinity, 0.5, false)]
+	[TestCase(double.NaN, double.NegativeInfinity, 0.5, false)]
+	[TestCase(double.MinValue, 42.69, 0.5, false)]
+	[TestCase(double.MinValue, double.NaN, 0.5, false)]
+	[TestCase(double.MinValue, double.MinValue, 0.5, true)]
+	[TestCase(double.MinValue, double.MaxValue, 0.5, false)]
+	[TestCase(double.MinValue, double.PositiveInfinity, 0.5, false)]
+	[TestCase(double.MinValue, double.NegativeInfinity, 0.5, false)]
+	[TestCase(double.MaxValue, 42.69, 0.5, false)]
+	[TestCase(double.MaxValue, double.NaN, 0.5, false)]
+	[TestCase(double.MaxValue, double.MinValue, 0.5, false)]
+	[TestCase(double.MaxValue, double.MaxValue, 0.5, true)]
+	[TestCase(double.MaxValue, double.PositiveInfinity, 0.5, false)]
+	[TestCase(double.MaxValue, double.NegativeInfinity, 0.5, false)]
+	[TestCase(double.PositiveInfinity, 42.69, 0.5, false)]
+	[TestCase(double.PositiveInfinity, double.NaN, 0.5, false)]
+	[TestCase(double.PositiveInfinity, double.MinValue, 0.5, false)]
+	[TestCase(double.PositiveInfinity, double.MaxValue, 0.5, false)]
+	[TestCase(double.PositiveInfinity, double.PositiveInfinity, 0.5, true)]
+	[TestCase(double.PositiveInfinity, double.NegativeInfinity, 0.5, false)]
+	[TestCase(double.NegativeInfinity, 42.69, 0.5, false)]
+	[TestCase(double.NegativeInfinity, double.NaN, 0.5, false)]
+	[TestCase(double.NegativeInfinity, double.MinValue, 0.5, false)]
+	[TestCase(double.NegativeInfinity, double.MaxValue, 0.5, false)]
+	[TestCase(double.NegativeInfinity, double.PositiveInfinity, 0.5, false)]
+	[TestCase(double.NegativeInfinity, double.NegativeInfinity, 0.5, true)]
+	public static void Equals_delta(double a, double b, double delta, bool expected) {
+		Assert.AreEqual(expected, a.Equals(b, delta));
+		Assert.AreNotEqual(expected, a.DoesNotEqual(b, delta));
+	}
 }

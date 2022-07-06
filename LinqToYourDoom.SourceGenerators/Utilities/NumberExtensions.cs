@@ -135,6 +135,17 @@ namespace LinqToYourDoom.SourceGenerators.Utilities {
 				code.AppendLine($@"[MethodImpl(MethodImplOptions.AggressiveInlining)] public static bool IsNaN(this { TYPE } @this) => { TYPE }.IsNaN(@this);");
 				code.AppendLine($@"[MethodImpl(MethodImplOptions.AggressiveInlining)] public static bool IsNotNaN(this { TYPE } @this) => !{ TYPE }.IsNaN(@this);");
 
+				code.AppendLine($@"/// <param name=""delta"">");
+				code.AppendLine($@"/// The maximum acceptable difference between <paramref name=""this""/> and <paramref name=""other""/>.");
+				code.AppendLine($@"/// </param>");
+				code.AppendLine($@"public static bool Equals(this { TYPE } @this, { TYPE } other, { TYPE } delta) => @this == other || (@this - other).Abs() <= delta;");
+
+				code.AppendLine($@"/// <param name=""delta"">");
+				code.AppendLine($@"/// The minimum acceptable difference between <paramref name=""this""/> and <paramref name=""other""/>.");
+				code.AppendLine($@"/// </param>");
+				code.AppendLine($@"[MethodImpl(MethodImplOptions.AggressiveInlining)]");
+				code.AppendLine($@"public static bool DoesNotEqual(this { TYPE } @this, { TYPE } other, { TYPE } delta) => !@this.Equals(other, delta);");
+
 				code.AppendLine($@"/// <param name=""fractionalDigits""> In <c>[ 0 ; { MAX_POWERS } ]</c>. </param>");
 				code.AppendLine($@"///");
 				code.AppendLine($@"/// <param name=""argumentValidation"">");
