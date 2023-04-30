@@ -26,9 +26,9 @@
 				--BACKGROUND: #1f1c21;
 				--FOREGROUND: #f0e0b2;
 				--SHADOW: #000000;
-				--PINK: #ef175e;
-				--ORANGE: #f76f36;
-				--GOLD: #fdbe11;
+				--ACCENT-1: #fdbe11;
+				--ACCENT-2: #f76f36;
+				--ACCENT-3: #ef175e;
 			}
 			* {
 				margin: 0;
@@ -69,6 +69,18 @@
 				font-size: 24px;
 				font-weight: 300;
 			}
+			nav {
+				padding: 64px;
+				text-align: center;
+			}
+			a {
+				display: inline-block;
+				padding: 0 16px;
+				color: var(--ACCENT-3);
+			}
+			a:hover, a:focus {
+				color: var(--ACCENT-1);
+			}
 		</style>
 	</head>
 	<body>
@@ -79,6 +91,10 @@
 				<strong>Extension methods. Because.</strong>
 			</p>
 		</header>
+		<nav>
+			<a href="https://github.com/Odepax/linq-to-your-doom/discussions">Discussions</a>
+			<a href="https://github.com/Odepax/linq-to-your-doom/issues">Issues</a>
+		</nav>
 		<footer>
 			<p>
 				Copyright &copy; 2021 Odepax
